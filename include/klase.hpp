@@ -2,13 +2,25 @@
 
 class ColumnInTable {
 		
-		double count = 0;
+		double count;
 		
-		double quantity = 0;
+		double quantity;
 		
-		double price = 0;
+		double price;
 	
 	public:
+
+		ColumnInTable(){
+			count = 0;
+			quantity = 0;
+			price = 0;
+		}
+
+		ColumnInTable(double countVal, double quantityVal, double priceVal){
+			count = countVal;
+			quantity = quantityVal;
+			price = priceVal;
+		}
 
 		virtual void print()=0;
 
@@ -33,6 +45,7 @@ class BID : public ColumnInTable{
 		void print(){
 			std::cout << "Kupac zeli da kupi " << getCount() << " tura dionica u kolicinama od " << getQuantity() << " komada po cijeni " << getPrice() << ".";
 		}
+		using ColumnInTable::ColumnInTable;
 };
 
 class ASK : public ColumnInTable{
@@ -41,5 +54,6 @@ class ASK : public ColumnInTable{
 		void print(){
 			std::cout << "Prodavac zeli da proda " << getCount() << " tura dionica u kolicinama od " << getQuantity() << " komada po cijeni " << getPrice() << ".";
 		}
+		using ColumnInTable::ColumnInTable;
 };
 
