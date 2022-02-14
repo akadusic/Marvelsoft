@@ -43,7 +43,7 @@ class BID : public ColumnInTable{
 	
 	public:
 		void print(){
-			std::cout << "Kupac zeli da kupi " << getCount() << " tura dionica u kolicinama od " << getQuantity() << " komada po cijeni " << getPrice() << ".";
+			std::cout << "Kupac zeli da kupi " << getCount() << " tura dionica u kolicinama od " << getQuantity() << " komada po cijeni " << getPrice() << "." << std::endl;
 		}
 		using ColumnInTable::ColumnInTable;
 };

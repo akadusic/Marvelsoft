@@ -3,13 +3,8 @@
 	"book":
 		{
 			"symbol":"ABBN",
-			 "bid": [
-			 	{
-			 		"count": 1,
-			 		"quantity": 1300,
-			 		"price": 50.10000
-			 	}],
-			  "ask": []
+			"bid": [],
+			"ask": []
 		}
 },
 {
@@ -17,7 +12,7 @@
 			"symbol":"ABBN",
 			"bid": [
 				{	
-					"count": 6, 
+					"count": 1, 
 					"quantity": 900, 
 					"price": 50.12000
 				},
@@ -27,11 +22,11 @@
 					"price": 50.10
 				},
 				{
-					"count": 2,
-					"quantity": 400,
-					"price": 50.10
+					"count": 3,
+					"quantity": 4343,
+					"price": 50.34
 				}],
-			"ask": [1,2323,34.21]
+			"ask": []
 		}
 },
 {
@@ -39,11 +34,21 @@
 			"symbol":"ABBN",
 			"bid": [
 				{
-					"count": 4,
-					"quantity": 6666,
-					"price":98.00
+					"count": 1,
+					"quantity": 900,
+					"price":50.12
+				},
+				{
+					"count": 1,
+					"quantity": 1300,
+					"price": 50.10
 				}],
-			"ask": [2,654,87.00]
+			"ask": [
+				{
+					"count": 1,
+					"quantity": 1900,
+					"price": 50.14
+				}]
 		}
 }
 ]
