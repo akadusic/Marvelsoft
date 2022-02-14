@@ -6,6 +6,7 @@
 #include <jsoncpp/json/value.h>
 #include "include/klase.hpp"
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 using namespace Json;
@@ -35,29 +36,39 @@ vector<vector<BID>> konverzija(){
 	return vectorOfBids;
 }
 
-//void logicForBid(vector<BID>& allJsonFiles){
-//	for(int i=1;i<allJsonFiles.size();i++){
-//		if(allJsonFiles[i].getPrice()==allJsonFiles[i-1].getPrice()){
-//			cout << "Razlika u kolicini je " << abs(allJsonFiles[i].getQuantity()-allJsonFiles[i-1].getQuantity());
-//			cout << "U koraku: " << i << endl;
-//		}
-//	}
-//}
 
 int main(){	
-	//Value jsoncic = parsiranjeJSONA("pomocni.json");
-	//for(Value::ArrayIndex i=0;i!=jsoncic.size();i++){
-	//	for(Value::ArrayIndex j=0;j!=jsoncic[i]["book"]["bid"].size();j++){
-			//cout << jsoncic[i]["book"]["bid"].size() << endl;
-	//		cout << (jsoncic[i]["book"]["bid"][j])["price"].asDouble() << " ";
-	//	}
-	vector<vector<BID>> vekti = konverzija();
-	for(int i=0;i<vekti.size();i++){
-		for(int j=0;j<vekti[i].size();j++){
-			cout << "U koraku " << i << endl;
-			vekti[i][j].print();
+	vector<vector<BID>> zapisi = konverzija();
+	for(int k=1;k<zapisi.size();k++){
+
+	
+	if(zapisi[k].size() == zapisi[k-1].size()){
+		for(int i=0;i<zapisi[k-1].size();i++){
+			double quant = (zapisi[k-1])[i].getQuantity();
+			double cijena = (zapisi[k-1])[i].getPrice();
+			for(int j=0;j<zapisi[k].size();j++){
+				if((zapisi[k])[j].getQuantity() != quant && (zapisi[k])[j].getPrice() == cijena){
+					if((zapisi[k])[j].getQuantity()-quant > 0){
+						cout << "PASSIVE BUY " << (zapisi[k])[j].getQuantity()-quant << "@" << cijena << endl;
+					} else if((zapisi[k])[j].getQuantity()-quant < 0){
+						cout << "CANCELED " << abs((zapisi[k])[j].getQuantity()-quant) << "@" << cijena << endl;
+					}
+				} 
+			}
+		}
+	} else {
+		vector<double> oldPrices;
+		for(int i=0;i<zapisi[k-1].size();i++){
+			oldPrices.push_back((zapisi[k-1])[i].getPrice());
+		}
+		for(int j=0;j<zapisi[k].size();j++){
+			if(find(oldPrices.begin(),oldPrices.end(),(zapisi[k])[j].getPrice())==oldPrices.end()){
+				cout << "PASSIVE BUY ZA " << (zapisi[k])[j].getQuantity() << "@" << (zapisi[k])[j].getPrice()<< endl;
+			}
 		}
 	}
-	//logicForBid(var);
+}
+
+
 	return 0;
 }
