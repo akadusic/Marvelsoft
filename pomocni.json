@@ -40,5 +40,30 @@
 					"price": 50.14
 				}]
 		}
+},
+{
+	"book": {
+			"symbol": "ABBN",
+			"bid": [
+				{
+					"count": 1,
+					"quantity": 1400,
+					"price": 50.12
+				},
+				{
+					"count": 1,
+					"quantity": 1300,
+					"price": 50.10
+				}
+				],
+			"ask":[
+				{
+					"count": 1,
+					"quantity": 1900,
+					"price": 50.14
+				}
+			       ]
+	
+		}
 }
 ]

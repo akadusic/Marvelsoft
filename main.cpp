@@ -32,6 +32,7 @@ vector<vector<BID>> konverzija(){
 			bids.push_back(returnValue);
 		}
 			vectorOfBids.push_back(bids);
+			bids.clear();
 	}
 	return vectorOfBids;
 }
@@ -41,7 +42,6 @@ int main(){
 	vector<vector<BID>> zapisi = konverzija();
 	for(int k=1;k<zapisi.size();k++){
 
-	
 	if(zapisi[k].size() == zapisi[k-1].size()){
 		for(int i=0;i<zapisi[k-1].size();i++){
 			double quant = (zapisi[k-1])[i].getQuantity();
