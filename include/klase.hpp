@@ -1,4 +1,6 @@
 #include <iostream>
+#include <ostream>
+#include <vector>
 
 class ColumnInTable {
 		
@@ -52,8 +54,21 @@ class ASK : public ColumnInTable{
 	
 	public:
 		void print(){
-			std::cout << "Prodavac zeli da proda " << getCount() << " tura dionica u kolicinama od " << getQuantity() << " komada po cijeni " << getPrice() << ".";
+			std::cout << "Prodavac zeli da proda " << getCount() << " tura dionica u kolicinama od " << getQuantity() << " komada po cijeni " << getPrice() << "." << std::endl;
 		}
 		using ColumnInTable::ColumnInTable;
 };
 
+class BOOK {
+	public:
+		std::string symbol;
+		std::vector<std::vector<BID>> bids;
+		std::vector<std::vector<ASK>> asks;
+};
+
+class TRADE {
+	public:
+		std::string symbol;
+		double count;
+		double price;
+};
