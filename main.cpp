@@ -1,3 +1,4 @@
+#include <cassert>
 #include <cmath>
 #include <fstream>
 #include <iostream>
@@ -7,9 +8,12 @@
 #include "include/klase.hpp"
 #include <vector>
 #include <algorithm>
+#include <boost/any.hpp>
+#include <iterator>
 
 using namespace std;
 using namespace Json;
+using namespace boost;
 
 Value parsiranjeJSONA(string jsonName){
 	ifstream loadJSON(jsonName);
@@ -19,8 +23,8 @@ Value parsiranjeJSONA(string jsonName){
 	return realJSON;
 }
 
-vector<vector<BID>> conversionOfBids(){
-	Value parsedDocument = parsiranjeJSONA("help.json");
+/*vector<vector<BID>> conversionOfBids(){
+	Value parsedDocument = parsiranjeJSONA("input.json");
 	BID returnValue;
 	vector<BID> bids = {};
 	vector<vector<BID>> vectorOfBids;
@@ -38,29 +42,49 @@ vector<vector<BID>> conversionOfBids(){
 		}
 	}
 	return vectorOfBids;	
-}
+}*/
 
-vector<vector<ASK>> conversionOfAsks(){
-	Value parsedDocument = parsiranjeJSONA("help.json");
-	ASK returnValue;
-	vector<ASK> asks = {};
-	vector<vector<ASK>> vectorOfAsks;
-	for(Value::ArrayIndex i=0; i!=parsedDocument.size();i++){
-		if(parsedDocument[i]["book"]["symbol"]=="CIMB"){		
-			for(Value::ArrayIndex j=0;j!=parsedDocument[i]["book"]["ask"].size();j++){
-				returnValue.setCount(((parsedDocument[i]["book"]["ask"][j])["count"].asDouble()));
-				returnValue.setQuantity(((parsedDocument[i]["book"]["ask"][j])["quantity"].asDouble()));
-				returnValue.setPrice(((parsedDocument[i]["book"]["ask"][j])["price"].asDouble()));
-				asks.push_back(returnValue);
+vector<any> AllNotestWithOneSymbol(){
+	Value parsedDocument = parsiranjeJSONA("input.json");
+	BID bidHelp;
+	ASK askHelp;
+	vector<BID> helpBids;
+	vector<ASK> helpAsks;
+	vector<vector<BID>> allBidsForOneSymbol;
+	vector<vector<ASK>> allAsksForOneSymbol;
+	BOOK helpBook;
+	TRADE helpTrade;
+	vector<any> booksAndTrades;
+	for(Value::ArrayIndex i=0;i!=parsedDocument.size();i++){	
+		if(parsedDocument[i]["book"]["symbol"]=="CIMB"){
+			helpBook.symbol="CIMB";
+			for(Value::ArrayIndex j=0;j!=parsedDocument[i]["book"]["bid"].size();j++){
+				bidHelp.setCount(((parsedDocument[i]["book"]["bid"][j])["count"].asDouble()));
+				bidHelp.setQuantity(((parsedDocument[i]["book"]["bid"][j])["quantity"].asDouble()));
+				bidHelp.setPrice(((parsedDocument[i]["book"]["bid"][j])["price"].asDouble()));
+				helpBook.bids.push_back(bidHelp);
 			}
-				vectorOfAsks.push_back(asks);
-				asks.clear();
+			for(Value::ArrayIndex j=0;j!=parsedDocument[i]["book"]["ask"].size();j++){
+				askHelp.setCount(((parsedDocument[i]["book"]["ask"][j])["count"].asDouble()));
+				askHelp.setQuantity(((parsedDocument[i]["book"]["ask"][j])["quantity"].asDouble()));
+				askHelp.setPrice(((parsedDocument[i]["book"]["ask"][j])["price"].asDouble()));
+				helpBook.asks.push_back(askHelp);
+			}
+			any book = helpBook;
+			booksAndTrades.push_back(book);   
+		}
+		if(parsedDocument[i]["trade"]["symbol"]=="CIMB"){
+			helpTrade.symbol = "CIMB";
+			helpTrade.count = parsedDocument[i]["trade"]["quantity"].asDouble();
+			helpTrade.price = parsedDocument[i]["trade"]["price"].asDouble();
+			any trade = helpTrade;
+			booksAndTrades.push_back(trade);
 		}
 	}
-	return vectorOfAsks;
+	return booksAndTrades;
 }
 
-void myfunction(BOOK books){
+/*void myfunction(BOOK books){
 	for(int i=0;i<books.bids.size();i++){ // Sve linije koje postoje u jednoj book
 		//cout << books.bids[i].size()+books.asks[i].size() << endl;
 		for(int k=1;k<books.bids[i].size()+books.asks[i].size();k++){ // svi zapisi u jednoj liniji i bids i books
@@ -121,14 +145,33 @@ void myfunction(BOOK books){
 			}		
 		}
 	}
+}*/
+
+template <typename T>
+bool is_type(any& any) {
+	return ( !any.empty() && boost::any_cast<T>(&any) );
+}
+
+void realFunction(vector<any>& events){
+	vector<any>::iterator it=events.begin();
+	for(;it!=events.end();it++){
+		if(it->type().hash_code() == typeid(BOOK).hash_code()){
+			cout << "Ovo su sve books" << endl;
+		} else if(it->type().hash_code() == typeid(TRADE).hash_code()){
+			cout << "Ovo su sve trades" << endl;
+		}
+	}
 }
 
 int main(){
-	BOOK firstBook;
-	firstBook.symbol = "CIMB";
-	firstBook.bids = conversionOfBids();
-	firstBook.asks = conversionOfAsks();
-	myfunction(firstBook);
+	vector<any> hopeLast = AllNotestWithOneSymbol();
+	//any var = hopeLast[7];
+	//assert(is_type<TRADE>(var));
+	realFunction(hopeLast);
+	//if(var.type().hash_code() == typeid(TRADE).hash_code()){
+	//	TRADE varijabla = any_cast<TRADE>(var);
+	//	cout << "Desila se trgovina i prodato je " << varijabla.count << " kolicina po cijeni" << varijabla.price << endl;
+	//}
 	//for(int i=0;i<firstBook.bids.size();i++){
 	//	for(int j=0;j<firstBook.bids[i].size();++j){
 	//		firstBook.bids[i][j].print();

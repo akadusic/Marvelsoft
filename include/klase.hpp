@@ -62,8 +62,8 @@ class ASK : public ColumnInTable{
 class BOOK {
 	public:
 		std::string symbol;
-		std::vector<std::vector<BID>> bids;
-		std::vector<std::vector<ASK>> asks;
+		std::vector<BID> bids;
+		std::vector<ASK> asks;
 };
 
 class TRADE {
