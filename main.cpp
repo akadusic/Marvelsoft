@@ -58,81 +58,13 @@ vector<any> AllNotestWithOneSymbol(){
 		}
 		if(parsedDocument[i]["trade"]["symbol"]=="ABBN"){
 			helpTrade.symbol = "ABBN";
-			helpTrade.count = parsedDocument[i]["trade"]["quantity"].asDouble();
+			helpTrade.quantity = parsedDocument[i]["trade"]["quantity"].asDouble();
 			helpTrade.price = parsedDocument[i]["trade"]["price"].asDouble();
 			any trade = helpTrade;
 			booksAndTrades.push_back(trade);
 		}
 	}
 	return booksAndTrades;
-}
-
-/*void myfunction(BOOK books){
-	for(int i=0;i<books.bids.size();i++){ // Sve linije koje postoje u jednoj book
-		//cout << books.bids[i].size()+books.asks[i].size() << endl;
-		for(int k=1;k<books.bids[i].size()+books.asks[i].size();k++){ // svi zapisi u jednoj liniji i bids i books
-			if(k<books.bids[i].size()){
-				if((books.bids[i].size()) == books.bids[i-1].size()){
-					for(int t=0;t<books.bids[i-1].size();t++){
-						double quant = (books.bids[i-1])[t].getQuantity();
-						double cijena = (books.bids[i-1])[t].getPrice();
-						for(int j=0;j<books.bids[i].size();j++){
-							if((books.bids[i])[j].getQuantity() != quant && (books.bids[i])[j].getPrice() == cijena){
-								if((books.bids[i])[j].getQuantity()-quant > 0){
-									cout << "PASSIVE BUY " << (books.bids[i])[j].getQuantity()-quant << "@" << cijena << endl;
-								} else if((books.bids[i])[j].getQuantity()-quant < 0){
-									cout << "CANCELED " << abs((books.bids[i])[j].getQuantity()-quant) << "@" << cijena << endl;
-								}  
-							} 
-						} 
-					}
-			
-				} else {
-					vector<double> oldPrices;
-					for(int t=0;i<books.bids[i-1].size();t++){
-						oldPrices.push_back((books.bids[i-1])[t].getPrice());
-					}
-					for(int j=books.bids[i].size()-1;j>-1;j--){
-						if(find(oldPrices.begin(),oldPrices.end(),(books.bids[i])[j].getPrice())==oldPrices.end()){
-							cout << "PASSIVE BUY ZA " << (books.bids[i])[j].getQuantity() << "@" << (books.bids[i])[j].getPrice()<< endl;
-						}
-					}
-				}
-			} else if(k>=books.bids[i].size()) {
-				//cout << "Usao u uslov barem jednom";
-				if((books.asks[i].size()) == books.asks[i-1].size()){
-					for(int t=0;t<books.asks[i-1].size();t++){
-						double quant = (books.asks[i-1])[t].getQuantity();
-						double cijena = (books.asks[i-1])[t].getPrice();
-						for(int j=0;j<books.asks[i].size();j++){
-							if((books.asks[i])[j].getQuantity() != quant && (books.asks[i])[j].getPrice() == cijena){
-								if((books.asks[i])[j].getQuantity()-quant > 0){
-									cout << "PASSIVE SELL " << (books.asks[i])[j].getQuantity()-quant << "@" << cijena << endl;
-								} else if((books.asks[i])[j].getQuantity()-quant < 0){
-									cout << "CANCELED " << abs((books.asks[i])[j].getQuantity()-quant) << "@" << cijena << endl;
-								}  
-							} 
-						} 
-					}
-				} else {
-					vector<double> oldPrices;
-					for(int t=0;i<books.asks[i-1].size();t++){
-						oldPrices.push_back((books.asks[i-1])[t].getPrice());
-					}
-					for(int j=books.asks[i].size()-1;j>-1;j--){
-						if(find(oldPrices.begin(),oldPrices.end(),(books.asks[i])[j].getPrice())==oldPrices.end()){
-							cout << "PASSIVE SELL ZA " << (books.asks[i])[j].getQuantity() << "@" << (books.asks[i])[j].getPrice()<< endl;
-						}
-					}
-				}	
-			}		
-		}
-	}
-}*/
-
-template <typename T>
-bool is_type(any& any) {
-	return ( !any.empty() && boost::any_cast<T>(&any) );
 }
 
 void realFunction(vector<any>& events){
@@ -161,7 +93,8 @@ void mainLogicFunction(vector<any>& booksAndTrades){
 	advance(it,1);
     for(; it != booksAndTrades.end(); it++, prev++ ){
         if(it->type().hash_code() == typeid(BOOK).hash_code() && prev->type().hash_code() == typeid(BOOK).hash_code()){
-            BOOK pomocnaPrev = any_cast<BOOK>(*prev);
+            //Ovdje je provjera kada su oba BOOK jedan za drugim u nizu
+			BOOK pomocnaPrev = any_cast<BOOK>(*prev);
 			BOOK pomocnaNext = any_cast<BOOK>(*it);
 			if(pomocnaNext.bids.size() == pomocnaPrev.bids.size()){
                 for(int i=0;i<pomocnaPrev.bids.size();i++){
@@ -183,17 +116,97 @@ void mainLogicFunction(vector<any>& booksAndTrades){
 						cout << "PASSIVE BUY " << pomocnaNext.bids[j].getQuantity() << "@" << pomocnaNext.bids[j].getPrice()<< endl;
 					}
 				}
-            }
+			} 
+			if(pomocnaNext.asks.size() == pomocnaPrev.asks.size()){
+				for(int i=0;i<pomocnaPrev.asks.size();i++){
+                    if((pomocnaNext.asks)[i].getQuantity() - (pomocnaPrev.asks)[i].getQuantity() > 0){
+						double kolicina = (pomocnaNext.asks)[i].getQuantity() - (pomocnaPrev.asks)[i].getQuantity();
+                        cout << "PASSIVE SELL " << kolicina << "@" << pomocnaNext.asks[i].getPrice() << endl;
+                    } else if((pomocnaNext.asks)[i].getQuantity() - (pomocnaPrev.asks)[i].getQuantity() < 0){
+						double kolicina = (pomocnaNext.asks)[i].getQuantity() - (pomocnaPrev.asks)[i].getQuantity();
+                        cout << "CANCELED " << kolicina << pomocnaNext.asks[i].getPrice() << endl;
+                    }
+                }
+			} else if(pomocnaNext.asks.size()!=pomocnaPrev.asks.size()){
+				vector<double> oldPrices;
+				for(int k=0;k<pomocnaPrev.asks.size();k++){
+					oldPrices.push_back(pomocnaPrev.asks[k].getPrice());
+				}
+				for(int j=0;j<pomocnaNext.asks.size();j++){
+					if(find(oldPrices.begin(),oldPrices.end(),pomocnaNext.asks[j].getPrice())==oldPrices.end()){
+						cout << "PASSIVE SELL " << pomocnaNext.asks[j].getQuantity() << "@" << pomocnaNext.asks[j].getPrice()<< endl;
+					}
+				}
+			}
 		} else if(it->type().hash_code() == typeid(TRADE).hash_code() && prev->type().hash_code() == typeid(BOOK).hash_code()){
+			// Ovdje je provjera kada prvo book pa onda trade
 			BOOK bookPrev = any_cast<BOOK>(*prev);
 			TRADE tradeNext = any_cast<TRADE>(*it);
 			if(tradeNext.price == bookPrev.bids[0].getPrice()){
-				cout << "AGGRESSIVE SELL " << tradeNext.count << "@" << tradeNext.price << endl;
+				bookPrev.bids[0].setQuantity(bookPrev.bids[0].getQuantity()-tradeNext.quantity);
+				cout << "AGGRESSIVE SELL " << tradeNext.quantity << "@" << tradeNext.price << endl;
 			} else if(tradeNext.price == bookPrev.asks[0].getPrice()){
-				cout << "AGGRESSIVE BUY " << tradeNext.count << "@" << tradeNext.price << endl;
+				bookPrev.asks[0].setQuantity(bookPrev.asks[0].getQuantity()-tradeNext.quantity);
+				cout << "AGGRESSIVE BUY " << tradeNext.quantity << "@" << tradeNext.price << endl;
 			}
 		} else if(it->type().hash_code() == typeid(BOOK).hash_code() && prev->type().hash_code() == typeid(TRADE).hash_code()){
-			cout << "Ovo je najtezi slucaj i treba obratiti paznju dobro " << endl;
+			//Ovdje je provjera kad dodje trade pa onda book
+			BOOK bookNext = any_cast<BOOK>(*it);
+			TRADE tradePrev = any_cast<TRADE>(*prev);
+			BOOK prevBook;
+			auto reverse = it;
+			for(;reverse--!=booksAndTrades.begin();){
+				if(reverse->type().hash_code() == typeid(BOOK).hash_code()){
+					prevBook = any_cast<BOOK>(*reverse);	
+					break;
+				}
+			}
+			if(bookNext.bids.size()==prevBook.bids.size()){
+				//cout << "Ovdje je prvi uslov kada su iste duzine bids" << endl;
+				for(int i=0;i<prevBook.bids.size();i++){
+                    if((bookNext.bids)[i].getQuantity() - (prevBook.bids)[i].getQuantity() > 0){
+						double kolicina = (bookNext.bids)[i].getQuantity() - (prevBook.bids)[i].getQuantity();
+                        cout << "PASSIVE BUY " << kolicina << "@" << bookNext.bids[i].getPrice() << endl;
+                    } else if((bookNext.bids)[i].getQuantity() - (prevBook.bids)[i].getQuantity() < 0){
+						double kolicina = (bookNext.bids)[i].getQuantity() - (prevBook.bids)[i].getQuantity();
+                        cout << "CANCELED " << kolicina << bookNext.bids[i].getPrice() << endl;
+                    }
+                }
+			} else if(bookNext.bids.size()!=prevBook.bids.size()){
+				//cout << "Ovdje je drugi uslov kada nisu iste duzine bids" << endl;
+				vector<double> oldPrices;
+				for(int k=0;k<prevBook.bids.size();k++){
+					oldPrices.push_back(prevBook.bids[k].getPrice());
+				}
+				for(int j=0;j<bookNext.bids.size();j++){
+					if(find(oldPrices.begin(),oldPrices.end(),bookNext.bids[j].getPrice())==oldPrices.end()){
+						cout << "PASSIVE BUY " << bookNext.bids[j].getQuantity() << "@" << bookNext.bids[j].getPrice()<< endl;
+					}
+				}
+			} 
+			if(bookNext.asks.size() == prevBook.asks.size()){
+				//cout << "Ovdje je uslov kada su asks iste duzine" << endl;
+				for(int i=0;i<prevBook.asks.size();i++){
+                    if((bookNext.asks)[i].getQuantity() - (prevBook.asks)[i].getQuantity() > 0){
+						double kolicina = (bookNext.asks)[i].getQuantity() - (prevBook.asks)[i].getQuantity();
+                        cout << "PASSIVE SELL " << kolicina << "@" << bookNext.asks[i].getPrice() << endl;
+                    } else if((bookNext.asks)[i].getQuantity() - (prevBook.asks)[i].getQuantity() < 0){
+						double kolicina = (bookNext.asks)[i].getQuantity() - (prevBook.asks)[i].getQuantity();
+                        cout << "CANCELED " << kolicina << bookNext.asks[i].getPrice() << endl;
+                    }
+                }
+			} else if(bookNext.asks.size()!=prevBook.asks.size()){
+				//cout << "Ovdje je uslov kada su asks razlicite duzine" << endl;
+				vector<double> oldPrices;
+				for(int k=0;k<prevBook.asks.size();k++){
+					oldPrices.push_back(prevBook.asks[k].getPrice());
+				}
+				for(int j=0;j<bookNext.asks.size();j++){
+					if(find(oldPrices.begin(),oldPrices.end(),bookNext.asks[j].getPrice())==oldPrices.end()){
+						cout << "PASSIVE SELL " << bookNext.asks[j].getQuantity() << "@" << bookNext.asks[j].getPrice()<< endl;
+					}
+				}
+			} 
 		}
 	}
 }

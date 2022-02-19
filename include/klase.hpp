@@ -69,6 +69,6 @@ class BOOK {
 class TRADE {
 	public:
 		std::string symbol;
-		double count;
+		double quantity;
 		double price;
 };
