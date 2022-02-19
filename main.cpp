@@ -23,29 +23,8 @@ Value parsiranjeJSONA(string jsonName){
 	return realJSON;
 }
 
-/*vector<vector<BID>> conversionOfBids(){
-	Value parsedDocument = parsiranjeJSONA("input.json");
-	BID returnValue;
-	vector<BID> bids = {};
-	vector<vector<BID>> vectorOfBids;
-	for(Value::ArrayIndex i=0; i!=parsedDocument.size();i++){
-		if(parsedDocument[i]["book"]["symbol"]=="CIMB"){
-			for(Value::ArrayIndex j=0;j!=parsedDocument[i]["book"]["bid"].size();j++){
-				returnValue.setCount(((parsedDocument[i]["book"]["bid"][j])["count"].asDouble()));
-				returnValue.setQuantity(((parsedDocument[i]["book"]["bid"][j])["quantity"].asDouble()));
-				returnValue.setPrice(((parsedDocument[i]["book"]["bid"][j])["price"].asDouble()));
-				bids.push_back(returnValue);
-			}
-				vectorOfBids.push_back(bids);
-				bids.clear();
-
-		}
-	}
-	return vectorOfBids;	
-}*/
-
 vector<any> AllNotestWithOneSymbol(){
-	Value parsedDocument = parsiranjeJSONA("input.json");
+	Value parsedDocument = parsiranjeJSONA("first.json");
 	BID bidHelp;
 	ASK askHelp;
 	vector<BID> helpBids;
@@ -56,25 +35,29 @@ vector<any> AllNotestWithOneSymbol(){
 	TRADE helpTrade;
 	vector<any> booksAndTrades;
 	for(Value::ArrayIndex i=0;i!=parsedDocument.size();i++){	
-		if(parsedDocument[i]["book"]["symbol"]=="CIMB"){
-			helpBook.symbol="CIMB";
+		if(parsedDocument[i]["book"]["symbol"]=="ABBN"){
+			helpBook.symbol="ABBN";
 			for(Value::ArrayIndex j=0;j!=parsedDocument[i]["book"]["bid"].size();j++){
 				bidHelp.setCount(((parsedDocument[i]["book"]["bid"][j])["count"].asDouble()));
 				bidHelp.setQuantity(((parsedDocument[i]["book"]["bid"][j])["quantity"].asDouble()));
 				bidHelp.setPrice(((parsedDocument[i]["book"]["bid"][j])["price"].asDouble()));
-				helpBook.bids.push_back(bidHelp);
+				helpBids.push_back(bidHelp);
 			}
 			for(Value::ArrayIndex j=0;j!=parsedDocument[i]["book"]["ask"].size();j++){
 				askHelp.setCount(((parsedDocument[i]["book"]["ask"][j])["count"].asDouble()));
 				askHelp.setQuantity(((parsedDocument[i]["book"]["ask"][j])["quantity"].asDouble()));
 				askHelp.setPrice(((parsedDocument[i]["book"]["ask"][j])["price"].asDouble()));
-				helpBook.asks.push_back(askHelp);
+				helpAsks.push_back(askHelp);
 			}
+			helpBook.bids = helpBids;
+			helpBook.asks = helpAsks;
+			helpBids.clear();
+			helpAsks.clear();
 			any book = helpBook;
 			booksAndTrades.push_back(book);   
 		}
-		if(parsedDocument[i]["trade"]["symbol"]=="CIMB"){
-			helpTrade.symbol = "CIMB";
+		if(parsedDocument[i]["trade"]["symbol"]=="ABBN"){
+			helpTrade.symbol = "ABBN";
 			helpTrade.count = parsedDocument[i]["trade"]["quantity"].asDouble();
 			helpTrade.price = parsedDocument[i]["trade"]["price"].asDouble();
 			any trade = helpTrade;
@@ -156,9 +139,61 @@ void realFunction(vector<any>& events){
 	vector<any>::iterator it=events.begin();
 	for(;it!=events.end();it++){
 		if(it->type().hash_code() == typeid(BOOK).hash_code()){
-			cout << "Ovo su sve books" << endl;
+			BOOK Book = any_cast<BOOK>(*it);
+			cout << "Odavdje je nova knjiga" << endl;
+			cout << Book.symbol << endl;
+			for(int i=0;i<Book.bids.size();i++){
+				cout << "Ovo je za jednu book" << endl;
+				cout << "Count je "<< Book.bids[i].getCount() << endl;
+				cout << "Cijena je " << Book.bids[i].getPrice() << endl;
+				cout << "Kolicina je " << Book.bids[i].getQuantity() << endl;
+				cout << endl;
+			}
 		} else if(it->type().hash_code() == typeid(TRADE).hash_code()){
 			cout << "Ovo su sve trades" << endl;
+		}
+	}
+}
+
+void mainLogicFunction(vector<any>& booksAndTrades){
+    vector<any>::iterator it=booksAndTrades.begin();
+	vector<any>::iterator prev = it;
+	advance(it,1);
+    for(; it != booksAndTrades.end(); it++, prev++ ){
+        if(it->type().hash_code() == typeid(BOOK).hash_code() && prev->type().hash_code() == typeid(BOOK).hash_code()){
+            BOOK pomocnaPrev = any_cast<BOOK>(*prev);
+			BOOK pomocnaNext = any_cast<BOOK>(*it);
+			if(pomocnaNext.bids.size() == pomocnaPrev.bids.size()){
+                for(int i=0;i<pomocnaPrev.bids.size();i++){
+                    if((pomocnaNext.bids)[i].getQuantity() - (pomocnaPrev.bids)[i].getQuantity() > 0){
+						double kolicina = (pomocnaNext.bids)[i].getQuantity() - (pomocnaPrev.bids)[i].getQuantity();
+                        cout << "PASSIVE BUY " << kolicina << "@" << pomocnaNext.bids[i].getPrice() << endl;
+                    } else if((pomocnaNext.bids)[i].getQuantity() - (pomocnaPrev.bids)[i].getQuantity() < 0){
+						double kolicina = (pomocnaNext.bids)[i].getQuantity() - (pomocnaPrev.bids)[i].getQuantity();
+                        cout << "CANCELED " << kolicina << pomocnaNext.bids[i].getPrice() << endl;
+                    }
+                }
+            } else if(pomocnaNext.bids.size()!=pomocnaPrev.bids.size()){
+				vector<double> oldPrices;
+				for(int k=0;k<pomocnaPrev.bids.size();k++){
+					oldPrices.push_back(pomocnaPrev.bids[k].getPrice());
+				}
+				for(int j=0;j<pomocnaNext.bids.size();j++){
+					if(find(oldPrices.begin(),oldPrices.end(),pomocnaNext.bids[j].getPrice())==oldPrices.end()){
+						cout << "PASSIVE BUY " << pomocnaNext.bids[j].getQuantity() << "@" << pomocnaNext.bids[j].getPrice()<< endl;
+					}
+				}
+            }
+		} else if(it->type().hash_code() == typeid(TRADE).hash_code() && prev->type().hash_code() == typeid(BOOK).hash_code()){
+			BOOK bookPrev = any_cast<BOOK>(*prev);
+			TRADE tradeNext = any_cast<TRADE>(*it);
+			if(tradeNext.price == bookPrev.bids[0].getPrice()){
+				cout << "AGGRESSIVE SELL " << tradeNext.count << "@" << tradeNext.price << endl;
+			} else if(tradeNext.price == bookPrev.asks[0].getPrice()){
+				cout << "AGGRESSIVE BUY " << tradeNext.count << "@" << tradeNext.price << endl;
+			}
+		} else if(it->type().hash_code() == typeid(BOOK).hash_code() && prev->type().hash_code() == typeid(TRADE).hash_code()){
+			cout << "Ovo je najtezi slucaj i treba obratiti paznju dobro " << endl;
 		}
 	}
 }
@@ -167,7 +202,8 @@ int main(){
 	vector<any> hopeLast = AllNotestWithOneSymbol();
 	//any var = hopeLast[7];
 	//assert(is_type<TRADE>(var));
-	realFunction(hopeLast);
+	//realFunction(hopeLast);
+	mainLogicFunction(hopeLast);
 	//if(var.type().hash_code() == typeid(TRADE).hash_code()){
 	//	TRADE varijabla = any_cast<TRADE>(var);
 	//	cout << "Desila se trgovina i prodato je " << varijabla.count << " kolicina po cijeni" << varijabla.price << endl;
