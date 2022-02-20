@@ -3,8 +3,10 @@
 #include <jsoncpp/json/value.h>
 #include <fstream>
 
-Value parsiranjeJSONA(string jsonName){
-	ifstream loadJSON(jsonName);
+using namespace Json;
+
+Value parsiranjeJSONA(std::string jsonName){
+	std::ifstream loadJSON(jsonName);
 	Value realJSON;
 	Reader reader;
 	reader.parse(loadJSON,realJSON);

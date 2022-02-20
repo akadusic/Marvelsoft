@@ -15,19 +15,18 @@
 #include <iterator>
 #include <thread>
 #include <future>
-#include <pthread.h>
 
 using namespace std;
 using namespace Json;
 using namespace boost;
 
-Value parsiranjeJSONA(string jsonName){
+/*Value parsiranjeJSONA(string jsonName){
 	ifstream loadJSON(jsonName);
 	Value realJSON;
 	Reader reader;
 	reader.parse(loadJSON,realJSON);
 	return realJSON;
-}
+}*/
 
 void AllNotestWithOneSymbol(promise<vector<any>> && firstPromise){
 	Value parsedDocument = parsiranjeJSONA("input.json");
