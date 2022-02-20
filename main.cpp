@@ -29,7 +29,7 @@ Value parsiranjeJSONA(string jsonName){
 	return realJSON;
 }
 
-vector<any> AllNotestWithOneSymbol(/*promise<vector<any>> && firstPromise*/){
+void AllNotestWithOneSymbol(promise<vector<any>> && firstPromise){
 	Value parsedDocument = parsiranjeJSONA("input.json");
 	BID bidHelp;
 	ASK askHelp;
@@ -70,8 +70,8 @@ vector<any> AllNotestWithOneSymbol(/*promise<vector<any>> && firstPromise*/){
 			booksAndTrades.push_back(trade);
 		}
 	}
-	//firstPromise.set_value(booksAndTrades);
-	return booksAndTrades;
+	firstPromise.set_value(booksAndTrades);
+	//return booksAndTrades;
 }
 
 void mainLogicFunction(vector<any>& booksAndTrades){
@@ -101,7 +101,7 @@ void mainLogicFunction(vector<any>& booksAndTrades){
 				}
 				for(int j=0;j<pomocnaNext.bids.size();j++){
 					if(find(oldPrices.begin(),oldPrices.end(),pomocnaNext.bids[j].getPrice())==oldPrices.end()){
-						cout << "PASSIVE BUY " << pomocnaNext.bids[j].getQuantity() << "@" << pomocnaNext.bids[j].getPrice()<< endl;
+						cout << "PASSIE BUY " << pomocnaNext.bids[j].getQuantity() << "@" << pomocnaNext.bids[j].getPrice()<< endl;
 					}
 				}
 			} 
@@ -251,15 +251,17 @@ int main(){
 	//mainLogicFunction(result);
 	
 	//One possible solution
-	//promise<vector<any>> firstPromise;
-	//future<vector<any>> firstFuture = firstPromise.get_future();
-	//thread th(&AllNotestWithOneSymbol,move(firstPromise));
-	//vector<any> returningValue = firstFuture.get();
-	//th.join();
+	promise<vector<any>> firstPromise;
+	future<vector<any>> firstFuture = firstPromise.get_future();
+	thread th(&AllNotestWithOneSymbol,move(firstPromise));
+	vector<any> returningValue = firstFuture.get();
+	thread second(mainLogicFunction,ref(returningValue));
+	th.join();
+	second.join();
 	
 	//secondPosible solution
-	future<vector<any>> result = async(&AllNotestWithOneSymbol);
-	vector<any> realRes = result.get();
-	thread th(&mainLogicFunction,&realRes);
+	//future<vector<any>> result = async(&AllNotestWithOneSymbol);
+	//vector<any> realRes = result.get();
+	//thread th(&mainLogicFunction,&realRes);
 	return 0;
 }

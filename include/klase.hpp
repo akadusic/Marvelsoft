@@ -1,6 +1,14 @@
 #include <iostream>
 #include <ostream>
 #include <vector>
+#include <jsoncpp/json/reader.h>
+#include <jsoncpp/json/value.h>
+#include <jsoncpp/json/json.h>
+
+using namespace std;
+using namespace Json;
+
+Value parsiranjeJSONA(string jsonName);
 
 class ColumnInTable {
 		
