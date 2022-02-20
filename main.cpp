@@ -1,6 +1,7 @@
 #include <cassert>
 #include <chrono>
 #include <cmath>
+#include <cstdlib>
 #include <fstream>
 #include <functional>
 #include <iostream>
@@ -14,6 +15,7 @@
 #include <iterator>
 #include <thread>
 #include <future>
+#include <pthread.h>
 
 using namespace std;
 using namespace Json;
@@ -27,8 +29,8 @@ Value parsiranjeJSONA(string jsonName){
 	return realJSON;
 }
 
-vector<any> AllNotestWithOneSymbol(){
-	Value parsedDocument = parsiranjeJSONA("first.json");
+vector<any> AllNotestWithOneSymbol(/*promise<vector<any>> && firstPromise*/){
+	Value parsedDocument = parsiranjeJSONA("input.json");
 	BID bidHelp;
 	ASK askHelp;
 	vector<BID> helpBids;
@@ -39,8 +41,8 @@ vector<any> AllNotestWithOneSymbol(){
 	TRADE helpTrade;
 	vector<any> booksAndTrades;
 	for(Value::ArrayIndex i=0;i!=parsedDocument.size();i++){	
-		if(parsedDocument[i]["book"]["symbol"]=="ABBN"){
-			helpBook.symbol="ABBN";
+		if(parsedDocument[i]["book"]["symbol"]=="CIMB"){
+			helpBook.symbol="CIMB";
 			for(Value::ArrayIndex j=0;j!=parsedDocument[i]["book"]["bid"].size();j++){
 				bidHelp.setCount(((parsedDocument[i]["book"]["bid"][j])["count"].asDouble()));
 				bidHelp.setQuantity(((parsedDocument[i]["book"]["bid"][j])["quantity"].asDouble()));
@@ -60,35 +62,16 @@ vector<any> AllNotestWithOneSymbol(){
 			any book = helpBook;
 			booksAndTrades.push_back(book);   
 		}
-		if(parsedDocument[i]["trade"]["symbol"]=="ABBN"){
-			helpTrade.symbol = "ABBN";
+		if(parsedDocument[i]["trade"]["symbol"]=="CIMB"){
+			helpTrade.symbol = "CIMB";
 			helpTrade.quantity = parsedDocument[i]["trade"]["quantity"].asDouble();
 			helpTrade.price = parsedDocument[i]["trade"]["price"].asDouble();
 			any trade = helpTrade;
 			booksAndTrades.push_back(trade);
 		}
 	}
+	//firstPromise.set_value(booksAndTrades);
 	return booksAndTrades;
-}
-
-void realFunction(vector<any>& events){
-	vector<any>::iterator it=events.begin();
-	for(;it!=events.end();it++){
-		if(it->type().hash_code() == typeid(BOOK).hash_code()){
-			BOOK Book = any_cast<BOOK>(*it);
-			cout << "Odavdje je nova knjiga" << endl;
-			cout << Book.symbol << endl;
-			for(int i=0;i<Book.bids.size();i++){
-				cout << "Ovo je za jednu book" << endl;
-				cout << "Count je "<< Book.bids[i].getCount() << endl;
-				cout << "Cijena je " << Book.bids[i].getPrice() << endl;
-				cout << "Kolicina je " << Book.bids[i].getQuantity() << endl;
-				cout << endl;
-			}
-		} else if(it->type().hash_code() == typeid(TRADE).hash_code()){
-			cout << "Ovo su sve trades" << endl;
-		}
-	}
 }
 
 void mainLogicFunction(vector<any>& booksAndTrades){
@@ -129,7 +112,7 @@ void mainLogicFunction(vector<any>& booksAndTrades){
                         cout << "PASSIVE SELL " << kolicina << "@" << pomocnaNext.asks[i].getPrice() << endl;
                     } else if((pomocnaNext.asks)[i].getQuantity() - (pomocnaPrev.asks)[i].getQuantity() < 0){
 						double kolicina = (pomocnaNext.asks)[i].getQuantity() - (pomocnaPrev.asks)[i].getQuantity();
-                        cout << "CANCELED BY" << kolicina << pomocnaNext.asks[i].getPrice() << endl;
+                        cout << "CANCELED BY" << abs(kolicina) << "@" <<pomocnaNext.asks[i].getPrice() << endl;
 						//Ovdje je cancel u redu
                     }
                 }
@@ -187,11 +170,11 @@ void mainLogicFunction(vector<any>& booksAndTrades){
                     if((bookNext.bids)[i].getQuantity() - (prevBook.bids)[i].getQuantity() > 0){
 						double kolicina = (bookNext.bids)[i].getQuantity() - (prevBook.bids)[i].getQuantity();
                         cout << "PASSIVE BUY " << kolicina << "@" << bookNext.bids[i].getPrice() << endl;
-                    } /*else if((bookNext.bids)[i].getQuantity() + tradePrev.quantity < (prevBook.bids)[i].getQuantity()){
-						double kolicina = (prevBook.bids)[i].getQuantity() - (prevBook.bids)[i].getQuantity()-tradePrev.quantity;
-                        cout << "CANCELED BY" << kolicina << "@" << bookNext.bids[i].getPrice() << endl;
+                    } //else if((bookNext.bids)[i].getQuantity() + tradePrev.quantity < (prevBook.bids)[i].getQuantity()){
+						//double kolicina = (prevBook.bids)[i].getQuantity() - (prevBook.bids)[i].getQuantity()-tradePrev.quantity;
+                        //cout << "CANCELED BY" << kolicina << "@" << bookNext.bids[i].getPrice() << endl;
 						//Ovdje je cancel takodjer u redu
-                    }*/
+                    //}
                 }
 			} else if(bookNext.bids.size()!=prevBook.bids.size()){
 				//cout << "Ovdje je drugi uslov kada nisu iste duzine bids" << endl;
@@ -211,10 +194,10 @@ void mainLogicFunction(vector<any>& booksAndTrades){
                     if((bookNext.asks)[i].getQuantity() - (prevBook.asks)[i].getQuantity()-tradePrev.quantity >= 0){
 						double kolicina = (bookNext.asks)[i].getQuantity() - (prevBook.asks)[i].getQuantity();
                         cout << "PASSIVE SELL " << kolicina << "@" << bookNext.asks[i].getPrice() << endl;
-                    } /* else if((bookNext.asks)[i].getQuantity() + tradePrev.quantity < (prevBook.bids)[i].getQuantity()){
-						double kolicina = (bookNext.asks)[i].getQuantity() - (prevBook.asks)[i].getQuantity()-tradePrev.quantity;
-                        cout << "CANCELED By" << kolicina << "@" << bookNext.asks[i].getPrice() << endl;
-                    }*/
+                    } // else if((bookNext.asks)[i].getQuantity() + tradePrev.quantity < (prevBook.bids)[i].getQuantity()){
+						//double kolicina = (bookNext.asks)[i].getQuantity() - (prevBook.asks)[i].getQuantity()-tradePrev.quantity;
+                        //cout << "CANCELED By" << kolicina << "@" << bookNext.asks[i].getPrice() << endl;
+                    //}
                 }
 			} else if(bookNext.asks.size()!=prevBook.asks.size()){
 				//cout << "Ovdje je uslov kada su asks razlicite duzine" << endl;
@@ -240,24 +223,43 @@ void mainLogicFunction(vector<any>& booksAndTrades){
 					prevBook = any_cast<BOOK>(realValue);	
 					break;
 				}
-			}	
-
-			if(nextTrade.price == prevBook.bids[0].getPrice()){
-				cout << "AGGRESSIVE SELL " << nextTrade.quantity << "@" << nextTrade.price << endl;
-				double pomKol = prevBook.bids[0].getQuantity();
-				prevBook.bids[0].setQuantity(pomKol-nextTrade.quantity);
-			} else if(nextTrade.price == prevBook.asks[0].getPrice()){
-				cout << "AGGRESSIVE BUY " << nextTrade.quantity << "@" << nextTrade.price << endl;
-				double pomKol = prevBook.asks[0].getQuantity();
-				prevBook.asks[0].setQuantity(pomKol - nextTrade.quantity);
 			}
+			vector<double> allBidsPrices,allAsksPrices;
+			for(int i=0;i<prevBook.bids.size();i++){
+				allBidsPrices.push_back(prevBook.bids[i].getPrice());
+			}
+			for(int j=0;j<prevBook.asks.size();j++){
+				allAsksPrices.push_back(prevBook.asks[j].getPrice());
+			}
+			for(int i=0;i<allBidsPrices.size();i++){
+				if(nextTrade.price == allBidsPrices[i]){
+					cout << "AGGRESSIVE SELL" << nextTrade.quantity << "@" << nextTrade.price << endl;
+				} 
+			}
+			for(int j=0;j<allAsksPrices.size();j++){
+				if(nextTrade.price == allAsksPrices[j]){
+					cout << "AGGRESSIVE BUY " << nextTrade.quantity << "@" << nextTrade.price << endl;
+				}
+			}
+			
 		}
 	}
 }
 
 int main(){
-	vector<any> result;
-	thread t(&AllNotestWithOneSymbol,ref(result));
-	t.join();
+	//vector<any> result = AllNotestWithOneSymbol();
+	//mainLogicFunction(result);
+	
+	//One possible solution
+	//promise<vector<any>> firstPromise;
+	//future<vector<any>> firstFuture = firstPromise.get_future();
+	//thread th(&AllNotestWithOneSymbol,move(firstPromise));
+	//vector<any> returningValue = firstFuture.get();
+	//th.join();
+	
+	//secondPosible solution
+	future<vector<any>> result = async(&AllNotestWithOneSymbol);
+	vector<any> realRes = result.get();
+	thread th(&mainLogicFunction,&realRes);
 	return 0;
 }
