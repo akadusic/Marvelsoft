@@ -1,12 +1,15 @@
 #include <iostream>
+#include <jsoncpp/json/value.h>
 #include <ostream>
 #include <vector>
 #include <jsoncpp/json/json.h>
 #include <vector>
 #include <boost/any.hpp>
 #include <stdlib.h>
+#include <algorithm>
 
 Json::Value parsiranjeJSONA(std::string jsonName);
+std::vector<std::string> returnAllSymbols(Json::Value jsonFile);
 
 class ColumnInTable {
 		

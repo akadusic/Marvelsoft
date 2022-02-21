@@ -20,15 +20,7 @@ using namespace std;
 using namespace Json;
 using namespace boost;
 
-/*Value parsiranjeJSONA(string jsonName){
-	ifstream loadJSON(jsonName);
-	Value realJSON;
-	Reader reader;
-	reader.parse(loadJSON,realJSON);
-	return realJSON;
-}*/
-
-void AllNotestWithOneSymbol(promise<vector<any>> && firstPromise){
+vector<any> AllNotestWithOneSymbol(/*promise<vector<any>> && firstPromise*/string symbol){
 	Value parsedDocument = parsiranjeJSONA("input.json");
 	BID bidHelp;
 	ASK askHelp;
@@ -40,8 +32,8 @@ void AllNotestWithOneSymbol(promise<vector<any>> && firstPromise){
 	TRADE helpTrade;
 	vector<any> booksAndTrades;
 	for(Value::ArrayIndex i=0;i!=parsedDocument.size();i++){	
-		if(parsedDocument[i]["book"]["symbol"]=="CIMB"){
-			helpBook.symbol="CIMB";
+		if(parsedDocument[i]["book"]["symbol"]==symbol){
+			helpBook.symbol=symbol;
 			for(Value::ArrayIndex j=0;j!=parsedDocument[i]["book"]["bid"].size();j++){
 				bidHelp.setCount(((parsedDocument[i]["book"]["bid"][j])["count"].asDouble()));
 				bidHelp.setQuantity(((parsedDocument[i]["book"]["bid"][j])["quantity"].asDouble()));
@@ -61,16 +53,16 @@ void AllNotestWithOneSymbol(promise<vector<any>> && firstPromise){
 			any book = helpBook;
 			booksAndTrades.push_back(book);   
 		}
-		if(parsedDocument[i]["trade"]["symbol"]=="CIMB"){
-			helpTrade.symbol = "CIMB";
+		if(parsedDocument[i]["trade"]["symbol"]==symbol){
+			helpTrade.symbol = symbol;
 			helpTrade.quantity = parsedDocument[i]["trade"]["quantity"].asDouble();
 			helpTrade.price = parsedDocument[i]["trade"]["price"].asDouble();
 			any trade = helpTrade;
 			booksAndTrades.push_back(trade);
 		}
 	}
-	firstPromise.set_value(booksAndTrades);
-	//return booksAndTrades;
+	//firstPromise.set_value(booksAndTrades);
+	return booksAndTrades;
 }
 
 void mainLogicFunction(vector<any>& booksAndTrades){
@@ -247,20 +239,27 @@ void mainLogicFunction(vector<any>& booksAndTrades){
 
 int main(){
 	//vector<any> result = AllNotestWithOneSymbol();
-	//mainLogicFunction(result);
-	
+	Value fajlJson = parsiranjeJSONA("input.json");
+	vector<string> symbols = returnAllSymbols(fajlJson);	
+	//for(int j=0;j<symbols.size();j++){
+	//	cout << symbols[j] << endl;
+	//}
+	for(int i=0;i<symbols.size();i++){
+		cout << symbols[i] << endl;
+		cout << endl;
+		cout << i << endl;
+		vector<any> bigResult = AllNotestWithOneSymbol(symbols[i]);
+		mainLogicFunction(bigResult);
+	}
 	//One possible solution
-	promise<vector<any>> firstPromise;
-	future<vector<any>> firstFuture = firstPromise.get_future();
-	thread th(&AllNotestWithOneSymbol,move(firstPromise));
-	vector<any> returningValue = firstFuture.get();
-	thread second(mainLogicFunction,ref(returningValue));
-	th.join();
-	second.join();
-	
-	//secondPosible solution
-	//future<vector<any>> result = async(&AllNotestWithOneSymbol);
-	//vector<any> realRes = result.get();
-	//thread th(&mainLogicFunction,&realRes);
+	//promise<vector<any>> firstPromise;
+	//future<vector<any>> firstFuture = firstPromise.get_future();
+	//thread th(&AllNotestWithOneSymbol,move(firstPromise));
+	//vector<any> returningValue = firstFuture.get();
+	//thread second(mainLogicFunction,ref(returningValue));
+	//thread symbols(returnAllSymbols,ref(returningValue));
+	//th.join();
+	//second.join();
+	//symbols.join();	
 	return 0;
 }
