@@ -1,0 +1,6 @@
+/home/asmir/Marvelsoft/build/CMakeFiles/rebuild_cache.dir
+/home/asmir/Marvelsoft/build/CMakeFiles/edit_cache.dir
+/home/asmir/Marvelsoft/build/CMakeFiles/orderBook.dir
+/home/asmir/Marvelsoft/build/src/CMakeFiles/edit_cache.dir
+/home/asmir/Marvelsoft/build/src/CMakeFiles/rebuild_cache.dir
+/home/asmir/Marvelsoft/build/src/CMakeFiles/firstLib.dir
