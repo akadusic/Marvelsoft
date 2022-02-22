@@ -8,10 +8,11 @@
 #include <stdlib.h>
 #include <algorithm>
 
-Json::Value parsiranjeJSONA(std::string jsonName);
+Json::Value parsiranjeJSONA();
 std::vector<std::string> returnAllSymbols(Json::Value jsonFile);
 std::vector<boost::any> AllNotestWithOneSymbol(/*promise<vector<any>> && firstPromise*/std::string symbol);
 void mainLogicFunction(std::vector<boost::any>& booksAndTrades);
+void outputJsonFile(std::string symbol);
 
 class ColumnInTable {
 		

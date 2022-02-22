@@ -171,6 +171,33 @@ mainLogicFunction.cpp.s:
 	cd /home/asmir/Marvelsoft/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/firstLib.dir/build.make src/CMakeFiles/firstLib.dir/mainLogicFunction.cpp.s
 .PHONY : mainLogicFunction.cpp.s
 
+outputFiles.o: outputFiles.cpp.o
+
+.PHONY : outputFiles.o
+
+# target to build an object file
+outputFiles.cpp.o:
+	cd /home/asmir/Marvelsoft/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/firstLib.dir/build.make src/CMakeFiles/firstLib.dir/outputFiles.cpp.o
+.PHONY : outputFiles.cpp.o
+
+outputFiles.i: outputFiles.cpp.i
+
+.PHONY : outputFiles.i
+
+# target to preprocess a source file
+outputFiles.cpp.i:
+	cd /home/asmir/Marvelsoft/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/firstLib.dir/build.make src/CMakeFiles/firstLib.dir/outputFiles.cpp.i
+.PHONY : outputFiles.cpp.i
+
+outputFiles.s: outputFiles.cpp.s
+
+.PHONY : outputFiles.s
+
+# target to generate assembly for a file
+outputFiles.cpp.s:
+	cd /home/asmir/Marvelsoft/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/firstLib.dir/build.make src/CMakeFiles/firstLib.dir/outputFiles.cpp.s
+.PHONY : outputFiles.cpp.s
+
 parsingJsonFunction.o: parsingJsonFunction.cpp.o
 
 .PHONY : parsingJsonFunction.o
@@ -264,6 +291,9 @@ help:
 	@echo "... mainLogicFunction.o"
 	@echo "... mainLogicFunction.i"
 	@echo "... mainLogicFunction.s"
+	@echo "... outputFiles.o"
+	@echo "... outputFiles.i"
+	@echo "... outputFiles.s"
 	@echo "... parsingJsonFunction.o"
 	@echo "... parsingJsonFunction.i"
 	@echo "... parsingJsonFunction.s"

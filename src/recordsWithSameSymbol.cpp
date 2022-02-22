@@ -1,7 +1,7 @@
 #include "../include/klase.hpp"
 
 std::vector<boost::any> AllNotestWithOneSymbol(/*promise<vector<any>> && firstPromise*/std::string symbol){
-	Json::Value parsedDocument = parsiranjeJSONA("input.json");
+	Json::Value parsedDocument = parsiranjeJSONA();
 	BID bidHelp;
 	ASK askHelp;
 	std::vector<BID> helpBids;

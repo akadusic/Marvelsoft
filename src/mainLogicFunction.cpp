@@ -38,7 +38,7 @@ void mainLogicFunction(std::vector<boost::any>& booksAndTrades){
 						std::cout << "PASSIVE SELL " << kolicina << "@" << pomocnaNext.asks[i].getPrice() << std::endl;
                     } else if((pomocnaNext.asks)[i].getQuantity() - (pomocnaPrev.asks)[i].getQuantity() < 0){
 						double kolicina = (pomocnaNext.asks)[i].getQuantity() - (pomocnaPrev.asks)[i].getQuantity();
-						std::cout << "CANCELED BY" << abs(kolicina) << "@" <<pomocnaNext.asks[i].getPrice() << std::endl;
+						std::cout << "CANCELED BY " << abs(kolicina) << "@" <<pomocnaNext.asks[i].getPrice() << std::endl;
 						//Ovdje je cancel u redu
                     }
                 }

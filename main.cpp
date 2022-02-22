@@ -21,7 +21,7 @@ using namespace Json;
 using namespace boost;
 
 int main(){
-	Value fajlJson = parsiranjeJSONA("input.json");
+	Value fajlJson = parsiranjeJSONA();
 	vector<string> symbols = returnAllSymbols(fajlJson);	
 	for(int i=0;i<symbols.size();i++){
 		cout << symbols[i] << endl;
@@ -29,6 +29,7 @@ int main(){
 		cout << i << endl;
 		vector<any> bigResult = AllNotestWithOneSymbol(symbols[i]);
 		mainLogicFunction(bigResult);
+		outputJsonFile(symbols[i]);	
 	}
 	//One possible solution
 	//promise<vector<any>> firstPromise;

@@ -128,12 +128,26 @@ src/CMakeFiles/firstLib.dir/returnAllSymbols.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/firstLib.dir/returnAllSymbols.cpp.s"
 	cd /home/asmir/Marvelsoft/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/asmir/Marvelsoft/src/returnAllSymbols.cpp -o CMakeFiles/firstLib.dir/returnAllSymbols.cpp.s
 
+src/CMakeFiles/firstLib.dir/outputFiles.cpp.o: src/CMakeFiles/firstLib.dir/flags.make
+src/CMakeFiles/firstLib.dir/outputFiles.cpp.o: ../src/outputFiles.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/asmir/Marvelsoft/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object src/CMakeFiles/firstLib.dir/outputFiles.cpp.o"
+	cd /home/asmir/Marvelsoft/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/firstLib.dir/outputFiles.cpp.o -c /home/asmir/Marvelsoft/src/outputFiles.cpp
+
+src/CMakeFiles/firstLib.dir/outputFiles.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/firstLib.dir/outputFiles.cpp.i"
+	cd /home/asmir/Marvelsoft/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/asmir/Marvelsoft/src/outputFiles.cpp > CMakeFiles/firstLib.dir/outputFiles.cpp.i
+
+src/CMakeFiles/firstLib.dir/outputFiles.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/firstLib.dir/outputFiles.cpp.s"
+	cd /home/asmir/Marvelsoft/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/asmir/Marvelsoft/src/outputFiles.cpp -o CMakeFiles/firstLib.dir/outputFiles.cpp.s
+
 # Object files for target firstLib
 firstLib_OBJECTS = \
 "CMakeFiles/firstLib.dir/mainLogicFunction.cpp.o" \
 "CMakeFiles/firstLib.dir/parsingJsonFunction.cpp.o" \
 "CMakeFiles/firstLib.dir/recordsWithSameSymbol.cpp.o" \
-"CMakeFiles/firstLib.dir/returnAllSymbols.cpp.o"
+"CMakeFiles/firstLib.dir/returnAllSymbols.cpp.o" \
+"CMakeFiles/firstLib.dir/outputFiles.cpp.o"
 
 # External object files for target firstLib
 firstLib_EXTERNAL_OBJECTS =
@@ -142,9 +156,10 @@ src/libfirstLib.a: src/CMakeFiles/firstLib.dir/mainLogicFunction.cpp.o
 src/libfirstLib.a: src/CMakeFiles/firstLib.dir/parsingJsonFunction.cpp.o
 src/libfirstLib.a: src/CMakeFiles/firstLib.dir/recordsWithSameSymbol.cpp.o
 src/libfirstLib.a: src/CMakeFiles/firstLib.dir/returnAllSymbols.cpp.o
+src/libfirstLib.a: src/CMakeFiles/firstLib.dir/outputFiles.cpp.o
 src/libfirstLib.a: src/CMakeFiles/firstLib.dir/build.make
 src/libfirstLib.a: src/CMakeFiles/firstLib.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/asmir/Marvelsoft/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX static library libfirstLib.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/asmir/Marvelsoft/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX static library libfirstLib.a"
 	cd /home/asmir/Marvelsoft/build/src && $(CMAKE_COMMAND) -P CMakeFiles/firstLib.dir/cmake_clean_target.cmake
 	cd /home/asmir/Marvelsoft/build/src && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/firstLib.dir/link.txt --verbose=$(VERBOSE)
 

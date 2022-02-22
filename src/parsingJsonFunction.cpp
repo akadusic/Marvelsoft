@@ -5,8 +5,8 @@
 
 using namespace Json;
 
-Value parsiranjeJSONA(std::string jsonName){
-	std::ifstream loadJSON(jsonName);
+Value parsiranjeJSONA(){
+	std::ifstream loadJSON("../input.json");
 	Value realJSON;
 	Reader reader;
 	reader.parse(loadJSON,realJSON);

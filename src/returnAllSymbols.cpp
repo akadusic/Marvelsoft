@@ -1,4 +1,6 @@
 #include "../include/klase.hpp"
+#include <jsoncpp/json/json.h>
+#include <jsoncpp/json/value.h>
 
 std::vector<std::string> returnAllSymbols(Json::Value jsonFile){
 	std::vector<std::string> symbols = {};
