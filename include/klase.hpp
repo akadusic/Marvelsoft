@@ -7,12 +7,13 @@
 #include <boost/any.hpp>
 #include <stdlib.h>
 #include <algorithm>
+#include <future>
 
-Json::Value parsiranjeJSONA();
-std::vector<std::string> returnAllSymbols(Json::Value jsonFile);
-std::vector<boost::any> AllNotestWithOneSymbol(/*promise<vector<any>> && firstPromise*/std::string symbol);
+void parsiranjeJSONA(std::promise<Json::Value> && fourthPromise);
+void returnAllSymbols(std::promise<std::vector<std::string>> && secondPromise,Json::Value jsonFile);
 void mainLogicFunction(std::vector<boost::any>& booksAndTrades);
 void outputJsonFile(std::string symbol);
+void AllNotestWithOneSymbol(std::promise<std::vector<boost::any>> && firstPromise,std::string symbol);
 
 class ColumnInTable {
 		

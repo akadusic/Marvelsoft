@@ -25,10 +25,8 @@ stdlib.h
 -
 algorithm
 -
-
-/home/asmir/Marvelsoft/src/mainLogicFunction.cpp
-../include/klase.hpp
-/home/asmir/Marvelsoft/include/klase.hpp
+future
+-
 
 /home/asmir/Marvelsoft/src/outputFiles.cpp
 ../include/klase.hpp
@@ -37,30 +35,12 @@ boost/any.hpp
 -
 fstream
 -
+future
+-
 jsoncpp/json/value.h
 -
 jsoncpp/json/writer.h
 -
-
-/home/asmir/Marvelsoft/src/parsingJsonFunction.cpp
-../include/klase.hpp
-/home/asmir/Marvelsoft/include/klase.hpp
-jsoncpp/json/reader.h
--
-jsoncpp/json/value.h
--
-fstream
--
-
-/home/asmir/Marvelsoft/src/recordsWithSameSymbol.cpp
-../include/klase.hpp
-/home/asmir/Marvelsoft/include/klase.hpp
-
-/home/asmir/Marvelsoft/src/returnAllSymbols.cpp
-../include/klase.hpp
-/home/asmir/Marvelsoft/include/klase.hpp
-jsoncpp/json/json.h
--
-jsoncpp/json/value.h
+thread
 -
 

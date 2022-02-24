@@ -1,7 +1,13 @@
 #include "../include/klase.hpp"
+#include <future>
+#include <jsoncpp/json/value.h>
 
-std::vector<boost::any> AllNotestWithOneSymbol(/*promise<vector<any>> && firstPromise*/std::string symbol){
-	Json::Value parsedDocument = parsiranjeJSONA();
+void AllNotestWithOneSymbol(std::promise<std::vector<boost::any>> && firstPromise,std::string symbol){
+	std::promise<Json::Value> fourthPromise;
+	std::future<Json::Value> fourthFuture;
+	std::thread jsonFile(&parsiranjeJSONA,move(fourthPromise));
+	Json::Value parsedDocument = fourthFuture.get();
+	jsonFile.join();
 	BID bidHelp;
 	ASK askHelp;
 	std::vector<BID> helpBids;
@@ -41,7 +47,7 @@ std::vector<boost::any> AllNotestWithOneSymbol(/*promise<vector<any>> && firstPr
 			booksAndTrades.push_back(trade);
 		}
 	}
-	//firstPromise.set_value(booksAndTrades);
-	return booksAndTrades;
+	firstPromise.set_value(booksAndTrades);
+	//return booksAndTrades;
 }
 

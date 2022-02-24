@@ -1,22 +1,30 @@
 #include "../include/klase.hpp"
+#include <fstream>
 
 void mainLogicFunction(std::vector<boost::any>& booksAndTrades){
 	std::vector<boost::any>::iterator it=booksAndTrades.begin();
 	std::vector<boost::any>::iterator prev = it;
 	advance(it,1);
+	//BOOK forSymbol = boost::any_cast<BOOK>(*prev);
+	std::ofstream fajlWithIntentions;
+	//fajlWithIntentions.open(forSymbol.symbol+".txt");
     for(; it != booksAndTrades.end(); it++, prev++ ){
         if(it->type().hash_code() == typeid(BOOK).hash_code() && prev->type().hash_code() == typeid(BOOK).hash_code()){
             //Ovdje je provjera kada su oba BOOK jedan za drugim u nizu
+				
 			BOOK pomocnaPrev = boost::any_cast<BOOK>(*prev);
 			BOOK pomocnaNext = boost::any_cast<BOOK>(*it);
+			std::string fajlName = pomocnaNext.symbol;
 			if(pomocnaNext.bids.size() == pomocnaPrev.bids.size()){
                 for(int i=0;i<pomocnaPrev.bids.size();i++){
                     if((pomocnaNext.bids)[i].getQuantity() - (pomocnaPrev.bids)[i].getQuantity() > 0){
 						double kolicina = (pomocnaNext.bids)[i].getQuantity() - (pomocnaPrev.bids)[i].getQuantity();
 						std::cout << "PASSIVE BUY " << kolicina << "@" << pomocnaNext.bids[i].getPrice() << std::endl;
+						fajlWithIntentions << "PASSIVE BUY " << kolicina << "@" << pomocnaNext.bids[i].getPrice() << std::endl;
                     } else if((pomocnaNext.bids)[i].getQuantity() - (pomocnaPrev.bids)[i].getQuantity() < 0){
 						double kolicina = (pomocnaNext.bids)[i].getQuantity() - (pomocnaPrev.bids)[i].getQuantity();
                         std::cout << "CANCELED BUY " << abs(kolicina) << "@" << pomocnaNext.bids[i].getPrice() << std::endl;
+						fajlWithIntentions << "CANCELED BUY " << abs(kolicina) << pomocnaNext.bids[i].getPrice() << std::endl; 
 						// Ovdje je cancel u redu
                     }
                 }
@@ -27,7 +35,8 @@ void mainLogicFunction(std::vector<boost::any>& booksAndTrades){
 				}
 				for(int j=0;j<pomocnaNext.bids.size();j++){
 					if(find(oldPrices.begin(),oldPrices.end(),pomocnaNext.bids[j].getPrice())==oldPrices.end()){
-						std::cout << "PASSIE BUY " << pomocnaNext.bids[j].getQuantity() << "@" << pomocnaNext.bids[j].getPrice()<< std::endl;
+						std::cout << "PASSIvE BUY " << pomocnaNext.bids[j].getQuantity() << "@" << pomocnaNext.bids[j].getPrice()<< std::endl;
+						fajlWithIntentions << "PASSIVE BUY " << pomocnaNext.bids[j].getQuantity() << "@" << pomocnaNext.bids[j].getPrice() << std::endl; 
 					}
 				}
 			} 
@@ -36,10 +45,11 @@ void mainLogicFunction(std::vector<boost::any>& booksAndTrades){
                     if((pomocnaNext.asks)[i].getQuantity() - (pomocnaPrev.asks)[i].getQuantity() > 0){
 						double kolicina = (pomocnaNext.asks)[i].getQuantity() - (pomocnaPrev.asks)[i].getQuantity();
 						std::cout << "PASSIVE SELL " << kolicina << "@" << pomocnaNext.asks[i].getPrice() << std::endl;
+						fajlWithIntentions << "PASSIVE SELL " << kolicina << "@" << pomocnaNext.asks[i].getPrice() << std::endl;
                     } else if((pomocnaNext.asks)[i].getQuantity() - (pomocnaPrev.asks)[i].getQuantity() < 0){
 						double kolicina = (pomocnaNext.asks)[i].getQuantity() - (pomocnaPrev.asks)[i].getQuantity();
 						std::cout << "CANCELED BY " << abs(kolicina) << "@" <<pomocnaNext.asks[i].getPrice() << std::endl;
-						//Ovdje je cancel u redu
+						fajlWithIntentions << "CANCELED BY " << abs(kolicina) << "@" << pomocnaNext.asks[i].getPrice() << std::endl; 
                     }
                 }
 			} else if(pomocnaNext.asks.size()!=pomocnaPrev.asks.size()){
@@ -49,11 +59,13 @@ void mainLogicFunction(std::vector<boost::any>& booksAndTrades){
 				}
 				for(int j=0;j<pomocnaNext.asks.size();j++){
 					if(find(oldPrices.begin(),oldPrices.end(),pomocnaNext.asks[j].getPrice())==oldPrices.end()){
-						std::cout << "PASSIVE SELL " << pomocnaNext.asks[j].getQuantity() << "@" << pomocnaNext.asks[j].getPrice()<< std::endl;
-					}
+						std::cout << "PASSIVE SELL " << pomocnaNext.asks[j].getQuantity() << "@" << pomocnaNext.asks[j].getPrice() << std::endl;
+						fajlWithIntentions << "PASSIVE SELL " << pomocnaNext.asks[j].getQuantity() << "@" << pomocnaNext.asks[j].getPrice() << std::endl;
 				}
 			}
-		} 
+				
+		}
+		}
 		if(it->type().hash_code() == typeid(TRADE).hash_code() && prev->type().hash_code() == typeid(BOOK).hash_code()){
 			// Ovdje je provjera kada prvo book pa onda trade
 			BOOK bookPrev = boost::any_cast<BOOK>(*prev);
@@ -66,6 +78,7 @@ void mainLogicFunction(std::vector<boost::any>& booksAndTrades){
 			for(int i=0;i<oldPricesBids.size();i++){
 				if(tradeNext.price == oldPricesBids[i]){
 					std::cout << "AGGRESSIVE SELL " << tradeNext.quantity << "@" << tradeNext.price << std::endl;
+					fajlWithIntentions << "AGGRESSIVE SELL " << tradeNext.quantity << "@" << tradeNext.price << std::endl;
 				}
 			}
 			for(int i=0;i<bookPrev.asks.size();i++){
@@ -74,6 +87,7 @@ void mainLogicFunction(std::vector<boost::any>& booksAndTrades){
 			for(int i=0;i<oldPricesAsks.size();i++){
 				if(tradeNext.price == oldPricesAsks[i]){
 					std::cout << "AGGRESSIVE BUY " << tradeNext.quantity << "@" << tradeNext.price << std::endl;
+					fajlWithIntentions << "AGGRESSIVE BUY " << tradeNext.quantity << "@" << tradeNext.price << std::endl;
 				}
 			}
 		} 
@@ -96,6 +110,7 @@ void mainLogicFunction(std::vector<boost::any>& booksAndTrades){
                     if((bookNext.bids)[i].getQuantity() - (prevBook.bids)[i].getQuantity() > 0){
 						double kolicina = (bookNext.bids)[i].getQuantity() - (prevBook.bids)[i].getQuantity();
 						std::cout << "PASSIVE BUY " << kolicina << "@" << bookNext.bids[i].getPrice() << std::endl;
+						fajlWithIntentions << "PASSIVE BUY " << kolicina << "@" << bookNext.bids[i].getPrice() << std::endl;
                     } //else if((bookNext.bids)[i].getQuantity() + tradePrev.quantity < (prevBook.bids)[i].getQuantity()){
 						//double kolicina = (prevBook.bids)[i].getQuantity() - (prevBook.bids)[i].getQuantity()-tradePrev.quantity;
                         //cout << "CANCELED BY" << kolicina << "@" << bookNext.bids[i].getPrice() << endl;
@@ -110,7 +125,8 @@ void mainLogicFunction(std::vector<boost::any>& booksAndTrades){
 				}
 				for(int j=0;j<bookNext.bids.size();j++){
 					if(find(oldPrices.begin(),oldPrices.end(),bookNext.bids[j].getPrice())==oldPrices.end()){
-						std::cout << "PASSIVE BUY " << bookNext.bids[j].getQuantity() << "@" << bookNext.bids[j].getPrice()<< std::endl;
+						std::cout << "PASSIVE BUY " << bookNext.bids[j].getQuantity() << "@" << bookNext.bids[j].getPrice() << std::endl;
+						fajlWithIntentions << "PASSIVE BUY " << bookNext.bids[j].getQuantity() << "@" << bookNext.bids[j].getPrice() << std::endl;
 					}
 				}
 			} 
@@ -120,6 +136,7 @@ void mainLogicFunction(std::vector<boost::any>& booksAndTrades){
                     if((bookNext.asks)[i].getQuantity() - (prevBook.asks)[i].getQuantity()-tradePrev.quantity >= 0){
 						double kolicina = (bookNext.asks)[i].getQuantity() - (prevBook.asks)[i].getQuantity();
 						std::cout << "PASSIVE SELL " << kolicina << "@" << bookNext.asks[i].getPrice() << std::endl;
+						fajlWithIntentions << "PASSIVE SELL " << kolicina << "@" << bookNext.asks[i].getPrice() << std::endl;
                     } // else if((bookNext.asks)[i].getQuantity() + tradePrev.quantity < (prevBook.bids)[i].getQuantity()){
 						//double kolicina = (bookNext.asks)[i].getQuantity() - (prevBook.asks)[i].getQuantity()-tradePrev.quantity;
                         //cout << "CANCELED By" << kolicina << "@" << bookNext.asks[i].getPrice() << endl;
@@ -133,7 +150,8 @@ void mainLogicFunction(std::vector<boost::any>& booksAndTrades){
 				}
 				for(int j=0;j<bookNext.asks.size();j++){
 					if(find(oldPrices.begin(),oldPrices.end(),bookNext.asks[j].getPrice())==oldPrices.end()){
-						std::cout << "PASSIVE SELL " << bookNext.asks[j].getQuantity() << "@" << bookNext.asks[j].getPrice()<< std::endl;
+						std::cout << "PASSIVE SELL " << bookNext.asks[j].getQuantity() << "@" << bookNext.asks[j].getPrice() << std::endl;
+						fajlWithIntentions << "PASSIVE SELL " << bookNext.asks[j].getQuantity() << "@" << bookNext.asks[j].getPrice() << std::endl;
 					}
 				}
 			} 
@@ -160,14 +178,18 @@ void mainLogicFunction(std::vector<boost::any>& booksAndTrades){
 			for(int i=0;i<allBidsPrices.size();i++){
 				if(nextTrade.price == allBidsPrices[i]){
 					std::cout << "AGGRESSIVE SELL" << nextTrade.quantity << "@" << nextTrade.price << std::endl;
+					fajlWithIntentions << "AGGRESSIVE SELL " << nextTrade.quantity << "@" << nextTrade.price << std::endl;
 				} 
 			}
 			for(int j=0;j<allAsksPrices.size();j++){
 				if(nextTrade.price == allAsksPrices[j]){
 					std::cout << "AGGRESSIVE BUY " << nextTrade.quantity << "@" << nextTrade.price << std::endl;
+					fajlWithIntentions << "AGGRESSIVE BUY " << nextTrade.quantity << "@" << nextTrade.price << std::endl;
 				}
 			}
 			
 		}
 	}
+	fajlWithIntentions.close();
 }
+
