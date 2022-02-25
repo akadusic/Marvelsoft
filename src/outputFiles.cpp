@@ -6,13 +6,8 @@
 #include <jsoncpp/json/writer.h>
 #include <thread>
 
-void outputJsonFile(std::string symbol){
-	std::ofstream ofstreamFile(symbol+".json");
-	std::promise<Json::Value> fourthPromise;
-	std::future<Json::Value> fourthFuture;
-	std::thread fourth(&parsiranjeJSONA,move(fourthPromise));
-	Json::Value allRecords = fourthFuture.get();
-	fourth.join();
+void outputJsonFile(std::string symbol,Json::Value allRecords){
+	std::ofstream ofstreamFile(symbol+".json");	
 	Json::Value outputFileObj;
 	Json::StyledWriter writer;
 	for(Json::Value::iterator it=allRecords.begin();it!=allRecords.end();it++){

@@ -72,7 +72,7 @@ CMAKE_BINARY_DIR = /home/asmir/Marvelsoft/build
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/main.dir/all
+all: CMakeFiles/OrderBook.dir/all
 all: src/all
 
 .PHONY : all
@@ -83,7 +83,7 @@ preinstall: src/preinstall
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/main.dir/clean
+clean: CMakeFiles/OrderBook.dir/clean
 clean: src/clean
 
 .PHONY : clean
@@ -107,31 +107,31 @@ src/clean: src/CMakeFiles/firstLib.dir/clean
 .PHONY : src/clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/main.dir
+# Target rules for target CMakeFiles/OrderBook.dir
 
 # All Build rule for target.
-CMakeFiles/main.dir/all: src/CMakeFiles/firstLib.dir/all
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/asmir/Marvelsoft/build/CMakeFiles --progress-num=7,8 "Built target main"
-.PHONY : CMakeFiles/main.dir/all
+CMakeFiles/OrderBook.dir/all: src/CMakeFiles/firstLib.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/OrderBook.dir/build.make CMakeFiles/OrderBook.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/OrderBook.dir/build.make CMakeFiles/OrderBook.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/asmir/Marvelsoft/build/CMakeFiles --progress-num=1,2 "Built target OrderBook"
+.PHONY : CMakeFiles/OrderBook.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/main.dir/rule: cmake_check_build_system
+CMakeFiles/OrderBook.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/asmir/Marvelsoft/build/CMakeFiles 8
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/main.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/OrderBook.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/asmir/Marvelsoft/build/CMakeFiles 0
-.PHONY : CMakeFiles/main.dir/rule
+.PHONY : CMakeFiles/OrderBook.dir/rule
 
 # Convenience name for target.
-main: CMakeFiles/main.dir/rule
+OrderBook: CMakeFiles/OrderBook.dir/rule
 
-.PHONY : main
+.PHONY : OrderBook
 
 # clean rule for target.
-CMakeFiles/main.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/clean
-.PHONY : CMakeFiles/main.dir/clean
+CMakeFiles/OrderBook.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/OrderBook.dir/build.make CMakeFiles/OrderBook.dir/clean
+.PHONY : CMakeFiles/OrderBook.dir/clean
 
 #=============================================================================
 # Target rules for target src/CMakeFiles/firstLib.dir
@@ -140,7 +140,7 @@ CMakeFiles/main.dir/clean:
 src/CMakeFiles/firstLib.dir/all:
 	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/firstLib.dir/build.make src/CMakeFiles/firstLib.dir/depend
 	$(MAKE) $(MAKESILENT) -f src/CMakeFiles/firstLib.dir/build.make src/CMakeFiles/firstLib.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/asmir/Marvelsoft/build/CMakeFiles --progress-num=1,2,3,4,5,6 "Built target firstLib"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/asmir/Marvelsoft/build/CMakeFiles --progress-num=3,4,5,6,7,8 "Built target firstLib"
 .PHONY : src/CMakeFiles/firstLib.dir/all
 
 # Build rule for subdir invocation for target.

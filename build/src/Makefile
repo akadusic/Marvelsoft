@@ -144,6 +144,33 @@ firstLib/fast:
 	cd /home/asmir/Marvelsoft/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/firstLib.dir/build.make src/CMakeFiles/firstLib.dir/build
 .PHONY : firstLib/fast
 
+allNotesWithOneSymbol.o: allNotesWithOneSymbol.cpp.o
+
+.PHONY : allNotesWithOneSymbol.o
+
+# target to build an object file
+allNotesWithOneSymbol.cpp.o:
+	cd /home/asmir/Marvelsoft/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/firstLib.dir/build.make src/CMakeFiles/firstLib.dir/allNotesWithOneSymbol.cpp.o
+.PHONY : allNotesWithOneSymbol.cpp.o
+
+allNotesWithOneSymbol.i: allNotesWithOneSymbol.cpp.i
+
+.PHONY : allNotesWithOneSymbol.i
+
+# target to preprocess a source file
+allNotesWithOneSymbol.cpp.i:
+	cd /home/asmir/Marvelsoft/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/firstLib.dir/build.make src/CMakeFiles/firstLib.dir/allNotesWithOneSymbol.cpp.i
+.PHONY : allNotesWithOneSymbol.cpp.i
+
+allNotesWithOneSymbol.s: allNotesWithOneSymbol.cpp.s
+
+.PHONY : allNotesWithOneSymbol.s
+
+# target to generate assembly for a file
+allNotesWithOneSymbol.cpp.s:
+	cd /home/asmir/Marvelsoft/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/firstLib.dir/build.make src/CMakeFiles/firstLib.dir/allNotesWithOneSymbol.cpp.s
+.PHONY : allNotesWithOneSymbol.cpp.s
+
 mainLogicFunction.o: mainLogicFunction.cpp.o
 
 .PHONY : mainLogicFunction.o
@@ -198,59 +225,32 @@ outputFiles.cpp.s:
 	cd /home/asmir/Marvelsoft/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/firstLib.dir/build.make src/CMakeFiles/firstLib.dir/outputFiles.cpp.s
 .PHONY : outputFiles.cpp.s
 
-parsingJsonFunction.o: parsingJsonFunction.cpp.o
+parsingJSON.o: parsingJSON.cpp.o
 
-.PHONY : parsingJsonFunction.o
-
-# target to build an object file
-parsingJsonFunction.cpp.o:
-	cd /home/asmir/Marvelsoft/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/firstLib.dir/build.make src/CMakeFiles/firstLib.dir/parsingJsonFunction.cpp.o
-.PHONY : parsingJsonFunction.cpp.o
-
-parsingJsonFunction.i: parsingJsonFunction.cpp.i
-
-.PHONY : parsingJsonFunction.i
-
-# target to preprocess a source file
-parsingJsonFunction.cpp.i:
-	cd /home/asmir/Marvelsoft/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/firstLib.dir/build.make src/CMakeFiles/firstLib.dir/parsingJsonFunction.cpp.i
-.PHONY : parsingJsonFunction.cpp.i
-
-parsingJsonFunction.s: parsingJsonFunction.cpp.s
-
-.PHONY : parsingJsonFunction.s
-
-# target to generate assembly for a file
-parsingJsonFunction.cpp.s:
-	cd /home/asmir/Marvelsoft/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/firstLib.dir/build.make src/CMakeFiles/firstLib.dir/parsingJsonFunction.cpp.s
-.PHONY : parsingJsonFunction.cpp.s
-
-recordsWithSameSymbol.o: recordsWithSameSymbol.cpp.o
-
-.PHONY : recordsWithSameSymbol.o
+.PHONY : parsingJSON.o
 
 # target to build an object file
-recordsWithSameSymbol.cpp.o:
-	cd /home/asmir/Marvelsoft/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/firstLib.dir/build.make src/CMakeFiles/firstLib.dir/recordsWithSameSymbol.cpp.o
-.PHONY : recordsWithSameSymbol.cpp.o
+parsingJSON.cpp.o:
+	cd /home/asmir/Marvelsoft/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/firstLib.dir/build.make src/CMakeFiles/firstLib.dir/parsingJSON.cpp.o
+.PHONY : parsingJSON.cpp.o
 
-recordsWithSameSymbol.i: recordsWithSameSymbol.cpp.i
+parsingJSON.i: parsingJSON.cpp.i
 
-.PHONY : recordsWithSameSymbol.i
+.PHONY : parsingJSON.i
 
 # target to preprocess a source file
-recordsWithSameSymbol.cpp.i:
-	cd /home/asmir/Marvelsoft/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/firstLib.dir/build.make src/CMakeFiles/firstLib.dir/recordsWithSameSymbol.cpp.i
-.PHONY : recordsWithSameSymbol.cpp.i
+parsingJSON.cpp.i:
+	cd /home/asmir/Marvelsoft/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/firstLib.dir/build.make src/CMakeFiles/firstLib.dir/parsingJSON.cpp.i
+.PHONY : parsingJSON.cpp.i
 
-recordsWithSameSymbol.s: recordsWithSameSymbol.cpp.s
+parsingJSON.s: parsingJSON.cpp.s
 
-.PHONY : recordsWithSameSymbol.s
+.PHONY : parsingJSON.s
 
 # target to generate assembly for a file
-recordsWithSameSymbol.cpp.s:
-	cd /home/asmir/Marvelsoft/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/firstLib.dir/build.make src/CMakeFiles/firstLib.dir/recordsWithSameSymbol.cpp.s
-.PHONY : recordsWithSameSymbol.cpp.s
+parsingJSON.cpp.s:
+	cd /home/asmir/Marvelsoft/build && $(MAKE) $(MAKESILENT) -f src/CMakeFiles/firstLib.dir/build.make src/CMakeFiles/firstLib.dir/parsingJSON.cpp.s
+.PHONY : parsingJSON.cpp.s
 
 returnAllSymbols.o: returnAllSymbols.cpp.o
 
@@ -288,18 +288,18 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... firstLib"
+	@echo "... allNotesWithOneSymbol.o"
+	@echo "... allNotesWithOneSymbol.i"
+	@echo "... allNotesWithOneSymbol.s"
 	@echo "... mainLogicFunction.o"
 	@echo "... mainLogicFunction.i"
 	@echo "... mainLogicFunction.s"
 	@echo "... outputFiles.o"
 	@echo "... outputFiles.i"
 	@echo "... outputFiles.s"
-	@echo "... parsingJsonFunction.o"
-	@echo "... parsingJsonFunction.i"
-	@echo "... parsingJsonFunction.s"
-	@echo "... recordsWithSameSymbol.o"
-	@echo "... recordsWithSameSymbol.i"
-	@echo "... recordsWithSameSymbol.s"
+	@echo "... parsingJSON.o"
+	@echo "... parsingJSON.i"
+	@echo "... parsingJSON.s"
 	@echo "... returnAllSymbols.o"
 	@echo "... returnAllSymbols.i"
 	@echo "... returnAllSymbols.s"

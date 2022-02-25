@@ -1,8 +1,8 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/firstLib.dir/allNotesWithOneSymbol.cpp.o"
   "CMakeFiles/firstLib.dir/mainLogicFunction.cpp.o"
   "CMakeFiles/firstLib.dir/outputFiles.cpp.o"
-  "CMakeFiles/firstLib.dir/parsingJsonFunction.cpp.o"
-  "CMakeFiles/firstLib.dir/recordsWithSameSymbol.cpp.o"
+  "CMakeFiles/firstLib.dir/parsingJSON.cpp.o"
   "CMakeFiles/firstLib.dir/returnAllSymbols.cpp.o"
   "libfirstLib.a"
   "libfirstLib.pdb"

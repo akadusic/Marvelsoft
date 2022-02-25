@@ -89,31 +89,31 @@ src/CMakeFiles/firstLib.dir/mainLogicFunction.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/firstLib.dir/mainLogicFunction.cpp.s"
 	cd /home/asmir/Marvelsoft/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/asmir/Marvelsoft/src/mainLogicFunction.cpp -o CMakeFiles/firstLib.dir/mainLogicFunction.cpp.s
 
-src/CMakeFiles/firstLib.dir/parsingJsonFunction.cpp.o: src/CMakeFiles/firstLib.dir/flags.make
-src/CMakeFiles/firstLib.dir/parsingJsonFunction.cpp.o: ../src/parsingJsonFunction.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/asmir/Marvelsoft/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object src/CMakeFiles/firstLib.dir/parsingJsonFunction.cpp.o"
-	cd /home/asmir/Marvelsoft/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/firstLib.dir/parsingJsonFunction.cpp.o -c /home/asmir/Marvelsoft/src/parsingJsonFunction.cpp
+src/CMakeFiles/firstLib.dir/parsingJSON.cpp.o: src/CMakeFiles/firstLib.dir/flags.make
+src/CMakeFiles/firstLib.dir/parsingJSON.cpp.o: ../src/parsingJSON.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/asmir/Marvelsoft/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object src/CMakeFiles/firstLib.dir/parsingJSON.cpp.o"
+	cd /home/asmir/Marvelsoft/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/firstLib.dir/parsingJSON.cpp.o -c /home/asmir/Marvelsoft/src/parsingJSON.cpp
 
-src/CMakeFiles/firstLib.dir/parsingJsonFunction.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/firstLib.dir/parsingJsonFunction.cpp.i"
-	cd /home/asmir/Marvelsoft/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/asmir/Marvelsoft/src/parsingJsonFunction.cpp > CMakeFiles/firstLib.dir/parsingJsonFunction.cpp.i
+src/CMakeFiles/firstLib.dir/parsingJSON.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/firstLib.dir/parsingJSON.cpp.i"
+	cd /home/asmir/Marvelsoft/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/asmir/Marvelsoft/src/parsingJSON.cpp > CMakeFiles/firstLib.dir/parsingJSON.cpp.i
 
-src/CMakeFiles/firstLib.dir/parsingJsonFunction.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/firstLib.dir/parsingJsonFunction.cpp.s"
-	cd /home/asmir/Marvelsoft/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/asmir/Marvelsoft/src/parsingJsonFunction.cpp -o CMakeFiles/firstLib.dir/parsingJsonFunction.cpp.s
+src/CMakeFiles/firstLib.dir/parsingJSON.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/firstLib.dir/parsingJSON.cpp.s"
+	cd /home/asmir/Marvelsoft/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/asmir/Marvelsoft/src/parsingJSON.cpp -o CMakeFiles/firstLib.dir/parsingJSON.cpp.s
 
-src/CMakeFiles/firstLib.dir/recordsWithSameSymbol.cpp.o: src/CMakeFiles/firstLib.dir/flags.make
-src/CMakeFiles/firstLib.dir/recordsWithSameSymbol.cpp.o: ../src/recordsWithSameSymbol.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/asmir/Marvelsoft/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object src/CMakeFiles/firstLib.dir/recordsWithSameSymbol.cpp.o"
-	cd /home/asmir/Marvelsoft/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/firstLib.dir/recordsWithSameSymbol.cpp.o -c /home/asmir/Marvelsoft/src/recordsWithSameSymbol.cpp
+src/CMakeFiles/firstLib.dir/allNotesWithOneSymbol.cpp.o: src/CMakeFiles/firstLib.dir/flags.make
+src/CMakeFiles/firstLib.dir/allNotesWithOneSymbol.cpp.o: ../src/allNotesWithOneSymbol.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/asmir/Marvelsoft/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object src/CMakeFiles/firstLib.dir/allNotesWithOneSymbol.cpp.o"
+	cd /home/asmir/Marvelsoft/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/firstLib.dir/allNotesWithOneSymbol.cpp.o -c /home/asmir/Marvelsoft/src/allNotesWithOneSymbol.cpp
 
-src/CMakeFiles/firstLib.dir/recordsWithSameSymbol.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/firstLib.dir/recordsWithSameSymbol.cpp.i"
-	cd /home/asmir/Marvelsoft/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/asmir/Marvelsoft/src/recordsWithSameSymbol.cpp > CMakeFiles/firstLib.dir/recordsWithSameSymbol.cpp.i
+src/CMakeFiles/firstLib.dir/allNotesWithOneSymbol.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/firstLib.dir/allNotesWithOneSymbol.cpp.i"
+	cd /home/asmir/Marvelsoft/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/asmir/Marvelsoft/src/allNotesWithOneSymbol.cpp > CMakeFiles/firstLib.dir/allNotesWithOneSymbol.cpp.i
 
-src/CMakeFiles/firstLib.dir/recordsWithSameSymbol.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/firstLib.dir/recordsWithSameSymbol.cpp.s"
-	cd /home/asmir/Marvelsoft/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/asmir/Marvelsoft/src/recordsWithSameSymbol.cpp -o CMakeFiles/firstLib.dir/recordsWithSameSymbol.cpp.s
+src/CMakeFiles/firstLib.dir/allNotesWithOneSymbol.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/firstLib.dir/allNotesWithOneSymbol.cpp.s"
+	cd /home/asmir/Marvelsoft/build/src && /usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/asmir/Marvelsoft/src/allNotesWithOneSymbol.cpp -o CMakeFiles/firstLib.dir/allNotesWithOneSymbol.cpp.s
 
 src/CMakeFiles/firstLib.dir/returnAllSymbols.cpp.o: src/CMakeFiles/firstLib.dir/flags.make
 src/CMakeFiles/firstLib.dir/returnAllSymbols.cpp.o: ../src/returnAllSymbols.cpp
@@ -144,8 +144,8 @@ src/CMakeFiles/firstLib.dir/outputFiles.cpp.s: cmake_force
 # Object files for target firstLib
 firstLib_OBJECTS = \
 "CMakeFiles/firstLib.dir/mainLogicFunction.cpp.o" \
-"CMakeFiles/firstLib.dir/parsingJsonFunction.cpp.o" \
-"CMakeFiles/firstLib.dir/recordsWithSameSymbol.cpp.o" \
+"CMakeFiles/firstLib.dir/parsingJSON.cpp.o" \
+"CMakeFiles/firstLib.dir/allNotesWithOneSymbol.cpp.o" \
 "CMakeFiles/firstLib.dir/returnAllSymbols.cpp.o" \
 "CMakeFiles/firstLib.dir/outputFiles.cpp.o"
 
@@ -153,8 +153,8 @@ firstLib_OBJECTS = \
 firstLib_EXTERNAL_OBJECTS =
 
 src/libfirstLib.a: src/CMakeFiles/firstLib.dir/mainLogicFunction.cpp.o
-src/libfirstLib.a: src/CMakeFiles/firstLib.dir/parsingJsonFunction.cpp.o
-src/libfirstLib.a: src/CMakeFiles/firstLib.dir/recordsWithSameSymbol.cpp.o
+src/libfirstLib.a: src/CMakeFiles/firstLib.dir/parsingJSON.cpp.o
+src/libfirstLib.a: src/CMakeFiles/firstLib.dir/allNotesWithOneSymbol.cpp.o
 src/libfirstLib.a: src/CMakeFiles/firstLib.dir/returnAllSymbols.cpp.o
 src/libfirstLib.a: src/CMakeFiles/firstLib.dir/outputFiles.cpp.o
 src/libfirstLib.a: src/CMakeFiles/firstLib.dir/build.make

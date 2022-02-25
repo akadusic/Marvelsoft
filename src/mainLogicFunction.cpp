@@ -5,9 +5,9 @@ void mainLogicFunction(std::vector<boost::any>& booksAndTrades){
 	std::vector<boost::any>::iterator it=booksAndTrades.begin();
 	std::vector<boost::any>::iterator prev = it;
 	advance(it,1);
-	//BOOK forSymbol = boost::any_cast<BOOK>(*prev);
+	BOOK forSymbol = boost::any_cast<BOOK>(*prev);
 	std::ofstream fajlWithIntentions;
-	//fajlWithIntentions.open(forSymbol.symbol+".txt");
+	fajlWithIntentions.open(forSymbol.symbol+".txt");
     for(; it != booksAndTrades.end(); it++, prev++ ){
         if(it->type().hash_code() == typeid(BOOK).hash_code() && prev->type().hash_code() == typeid(BOOK).hash_code()){
             //Ovdje je provjera kada su oba BOOK jedan za drugim u nizu

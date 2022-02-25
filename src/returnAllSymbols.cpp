@@ -4,7 +4,7 @@
 #include <jsoncpp/json/value.h>
 #include <vector>
 
-void returnAllSymbols(std::promise<std::vector<std::string>> && secondPromise, Json::Value jsonFile){
+void returnAllSymbols(std::promise<std::vector<std::string>> && fifthPromise, Json::Value jsonFile){
 	std::vector<std::string> symbols = {};
 	for(Json::Value::ArrayIndex i=0;i!=jsonFile.size();i++){
 		std::string findedSymbol = jsonFile[i]["book"]["symbol"].asString();
@@ -14,6 +14,6 @@ void returnAllSymbols(std::promise<std::vector<std::string>> && secondPromise, J
 	}
 	symbols.pop_back();
 	//return symbols;
-	secondPromise.set_value(symbols);
+	fifthPromise.set_value(symbols);
 }
 

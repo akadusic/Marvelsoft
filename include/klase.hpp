@@ -9,12 +9,6 @@
 #include <algorithm>
 #include <future>
 
-void parsiranjeJSONA(std::promise<Json::Value> && fourthPromise);
-void returnAllSymbols(std::promise<std::vector<std::string>> && secondPromise,Json::Value jsonFile);
-void mainLogicFunction(std::vector<boost::any>& booksAndTrades);
-void outputJsonFile(std::string symbol);
-void AllNotestWithOneSymbol(std::promise<std::vector<boost::any>> && firstPromise,std::string symbol);
-
 class ColumnInTable {
 		
 		double count;

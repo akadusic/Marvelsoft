@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/asmir/Marvelsoft/src/include
+CXX_INCLUDES = 
 
 CXX_FLAGS =   -w
 

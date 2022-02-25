@@ -1,6 +1,5 @@
 #include <cassert>
 #include <chrono>
-#include <cmath>
 #include <cstdlib>
 #include <fstream>
 #include <functional>
@@ -9,6 +8,11 @@
 #include <jsoncpp/json/reader.h>
 #include <jsoncpp/json/value.h>
 #include "include/klase.hpp"
+#include "outputJsonFile.hpp"
+#include "parsingJSON.hpp"
+#include "allNotesWithOneSymbol.hpp"
+#include "returnAllSymbols.hpp"
+#include "mainLogicFunction.hpp"
 #include <vector>
 #include <algorithm>
 #include <boost/any.hpp>
@@ -21,40 +25,33 @@ using namespace Json;
 using namespace boost;
 
 int main(){
-	//auto start = chrono::high_resolution_clock::now();
+	auto start = chrono::high_resolution_clock::now();	
 	promise<Value> firstPromise;
 	future<Value> firstFuture = firstPromise.get_future();
-	thread first(&parsiranjeJSONA,move(firstPromise));
+	thread first(&parsingJSON,move(firstPromise));
 	Value fajlJson = firstFuture.get();
 	first.join();
-	cout << fajlJson.size();
-	/*vector<string> symbols = returnAllSymbols(fajlJson);	
+
+	promise<vector<string>> fifthPromise;
+	future<vector<string>> fifthFuture = fifthPromise.get_future();
+	thread fifth(&returnAllSymbols, move(fifthPromise), fajlJson);
+	vector<string> symbols = fifthFuture.get();
+	fifth.join();
+	
 	for(int i=0;i<symbols.size();i++){
-		cout << symbols[i] << endl;
-		cout << endl;
-		cout << i << endl;
-		vector<any> bigResult = AllNotestWithOneSymbol(symbols[i]);
-		mainLogicFunction(bigResult);
-		outputJsonFile(symbols[i]);	
+		promise<vector<any>> secondPromise;
+		future<vector<any>> secondFuture = secondPromise.get_future();
+		thread second(&allNotesWithOneSymbol,move(secondPromise),symbols[i],fajlJson);
+		vector<any> records = secondFuture.get();
+		second.join();
+
+		thread third(mainLogicFunction,ref(records));
+		third.join();
+
+		thread fourth(outputJsonFile,symbols[i],ref(fajlJson));
+		fourth.join();
 	}
 	auto stop = chrono::high_resolution_clock::now();
-	auto duration = chrono::duration_cast<chrono::milliseconds>(stop-start);
-	cout << "Vrijeme trajanja programa je " << duration.count() << " of milliseconds!" << endl;*/
-	
-	//One possible solution with threading
-	//promise<vector<any>> secondPromise;
-	//promise<vector<string>> secondPromise;
-	//future<vector<any>> secondFuture = secondPromise.get_future();
-	//future<vector<string>> secondFuture = secondPromise.get_future();
-	//thread firstThread(&returnAllSymbols,move(secondPromise),fajlJson);
-	//thread second(&AllNotestWithOneSymbol,move(secondPromise),"ABBN");
-	//vector<any> returningValue = firstFuture.get();
-	//vector<string> symbols = secondFuture.get();
-	//thread second(mainLogicFunction,ref(returningValue));
-	//thread symbols(returnAllSymbols,ref(returningValue));
-	//th.join();
-	//second.join();
-	//firstThread.join();
-	//symbols.join();*/	
-	return 0;
+	auto numberOfMiliseconds = chrono::duration_cast<chrono::milliseconds>(stop - start);
+	cout << "Time of execution is " << numberOfMiliseconds.count() << " of milliseconds!" << endl;
 }
