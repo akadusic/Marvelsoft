@@ -41,7 +41,13 @@ vector
 /home/asmir/Marvelsoft/src/mainLogicFunction.cpp
 ../include/klase.hpp
 /home/asmir/Marvelsoft/include/klase.hpp
+boost/any.hpp
+-
 fstream
+-
+functional
+-
+iostream
 -
 
 /home/asmir/Marvelsoft/src/outputFiles.cpp

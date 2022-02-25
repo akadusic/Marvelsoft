@@ -1,4 +1,3 @@
-#include <cassert>
 #include <chrono>
 #include <cstdlib>
 #include <fstream>
@@ -25,6 +24,7 @@ using namespace Json;
 using namespace boost;
 
 int main(){
+	
 	auto start = chrono::high_resolution_clock::now();	
 	promise<Value> firstPromise;
 	future<Value> firstFuture = firstPromise.get_future();
@@ -37,21 +37,23 @@ int main(){
 	thread fifth(&returnAllSymbols, move(fifthPromise), fajlJson);
 	vector<string> symbols = fifthFuture.get();
 	fifth.join();
-	
+	cout << "CALCULATING..." << endl;
 	for(int i=0;i<symbols.size();i++){
 		promise<vector<any>> secondPromise;
 		future<vector<any>> secondFuture = secondPromise.get_future();
 		thread second(&allNotesWithOneSymbol,move(secondPromise),symbols[i],fajlJson);
 		vector<any> records = secondFuture.get();
+		vector<any> otherRecs = records;
 		second.join();
 
-		thread third(mainLogicFunction,ref(records));
+		thread third(&mainLogicFunction,ref(otherRecs));
 		third.join();
 
 		thread fourth(outputJsonFile,symbols[i],ref(fajlJson));
 		fourth.join();
 	}
 	auto stop = chrono::high_resolution_clock::now();
+	cout << "DONE!" << endl;
 	auto numberOfMiliseconds = chrono::duration_cast<chrono::milliseconds>(stop - start);
 	cout << "Time of execution is " << numberOfMiliseconds.count() << " of milliseconds!" << endl;
 }

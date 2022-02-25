@@ -10,10 +10,9 @@
 #include <future>
 
 class ColumnInTable {
-		
 		double count;
 		
-		double quantity;
+		double quantity;		
 		
 		double price;
 	
@@ -52,7 +51,7 @@ class BID : public ColumnInTable{
 	
 	public:
 		void print(){
-			std::cout << "Kupac zeli da kupi " << getCount() << " tura dionica u kolicinama od " << getQuantity() << " komada po cijeni " << getPrice() << "." << std::endl;
+			std::cout << "Cout: " << getCount() << "Quantity: " << getQuantity() << " Price: " << getPrice() << "." << std::endl;
 		}
 		using ColumnInTable::ColumnInTable;
 };
@@ -61,21 +60,70 @@ class ASK : public ColumnInTable{
 	
 	public:
 		void print(){
-			std::cout << "Prodavac zeli da proda " << getCount() << " tura dionica u kolicinama od " << getQuantity() << " komada po cijeni " << getPrice() << "." << std::endl;
+			std::cout << "Cout: " << getCount() << " Quantity: " << getQuantity() << " Price: " << getPrice() << "." << std::endl;
 		}
 		using ColumnInTable::ColumnInTable;
 };
 
 class BOOK {
-	public:
 		std::string symbol;
+		
 		std::vector<BID> bids;
+		
 		std::vector<ASK> asks;
+	
+	public:
+		std::string getSymbol(){ return symbol; }
+		
+		std::vector<BID> getBids(){ return bids; }
+		
+		std::vector<ASK> getAsks(){ return asks; }
+
+		void setSymbol(std::string symbolVal){ symbol = symbolVal; }
+		
+		void setBids(std::vector<BID> bidsVal){ bids = bidsVal; }
+		
+		void setAsks(std::vector<ASK> asksVal){ asks = asksVal; }
+		
+		BOOK(){}
+		
+		BOOK(const BOOK& book){
+			symbol = book.symbol;
+			bids = book.bids;
+			asks = book.asks;
+		}
+		
+		BOOK operator=(const BOOK& book){
+			symbol=book.symbol;
+			bids=book.bids;
+			asks=book.asks;
+			return *this;
+		}
+		
+		BOOK(std::string simbolVal):symbol(simbolVal){}
+		
+		BOOK(std::vector<BID> bidsVal):bids(bidsVal){}
+		
+		BOOK(std::vector<ASK> asksVal):asks(asksVal){}
 };
 
 class TRADE {
-	public:
 		std::string symbol;
+		
 		double quantity;
+		
 		double price;
+	
+	public:
+		std::string getSymbol(){ return symbol; }
+		
+		double getQuantity(){ return quantity; }
+		
+		double getPrice(){ return price; }
+
+		void setSymbol(std::string symbolVal){ symbol = symbolVal; }
+		
+		void setQuantity(double quantityVal){ quantity = quantityVal; }
+		
+		void setPrice(double priceVal){ price = priceVal; }
 };
